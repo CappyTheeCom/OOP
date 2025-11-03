@@ -1,0 +1,42 @@
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>208</x><y>488</y><w>152</w><h>88</h></coordinates><panel_attributes>Identification 
+--
+#fname: str
+#name: str
+#ID: int
+--
++__init__(self, fname,lname,id)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>208</x><y>336</y><w>160</w><h>88</h></coordinates><panel_attributes>Teacher
+--
+#lecturer: Boolean 
+--
++__init__(self, fname,lname,id)
++super.()__init__(fname,lname,id)
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>328</x><y>120</y><w>152</w><h>88</h></coordinates><panel_attributes>Admin_System
+--
+-teachers_subjects: dic &lt;Teacher&gt;
+-students: list &lt;Identification&gt;
+--
++__init__(self, fname,lname,id)
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>488</x><y>488</y><w>152</w><h>88</h></coordinates><panel_attributes>Subject
+--
+#code: int
+#name: str
+--
++__init__(self, name,code)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>352</x><y>512</y><w>152</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=0..*
+m2=1..*
+Attends &gt;</panel_attributes><additional_attributes>170;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>360</x><y>368</y><w>296</w><h>136</h></coordinates><panel_attributes>lt=-
+m1=0..*
+m2=0..1
+teaches to &gt;</panel_attributes><additional_attributes>10;20;330;20;330;150</additional_attributes></element><element><id>Relation</id><coordinates><x>272</x><y>416</y><w>24</w><h>88</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>280</x><y>200</y><w>112</w><h>152</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>120;10;10;170</additional_attributes></element><element><id>Relation</id><coordinates><x>432</x><y>200</y><w>128</w><h>304</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;140;360</additional_attributes></element><element><id>Relation</id><coordinates><x>168</x><y>200</y><w>192</w><h>344</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>220;10;10;160;50;410</additional_attributes></element><element><id>UMLClass</id><coordinates><x>328</x><y>0</y><w>152</w><h>120</h></coordinates><panel_attributes>System-Display
+--
+-teachers: list &lt;Teacher&gt;
+-students: list &lt;Identification&gt;
+-subject: list
+--
++__init__(self, fname,lname,id)
++teacher_enrollment 
++student_enrollment 
++student_reassignment 
++teacher_reassignment 
+</panel_attributes><additional_attributes></additional_attributes></element></diagram>

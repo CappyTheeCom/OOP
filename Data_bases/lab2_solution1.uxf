@@ -1,0 +1,73 @@
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><element><id>UMLClass</id><coordinates><x>28</x><y>96</y><w>152</w><h>104</h></coordinates><panel_attributes>Clients
+--
+client                                 ID1
+company 
+name 
+contactPerson
+contactInformation</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>180</x><y>560</y><w>128</w><h>104</h></coordinates><panel_attributes>Employee
+--
+employee                  ID1 
+firstName
+lastName 
+dateOfBirth 
+contactInformation
+projectRole</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>404</x><y>336</y><w>128</w><h>104</h></coordinates><panel_attributes>Project 
+--
+project                       ID1
+projectName 
+startDate
+endDate 
+projectStatus </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>796</x><y>336</y><w>128</w><h>88</h></coordinates><panel_attributes>Project Meetings
+--
+project                       ID1 
+meeting date 
+time 
+agenda</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>436</x><y>552</y><w>96</w><h>112</h></coordinates><panel_attributes>Tasks
+--
+project 	            ID1
+taskName 
+taskStatus 
+startDate 
+endDate</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>740</x><y>144</y><w>104</w><h>96</h></coordinates><panel_attributes>project milestone
+--
+project               ID1
+milestoneName 
+dueDate</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>332</x><y>104</y><w>120</w><h>80</h></coordinates><panel_attributes>FeedBack
+--
+project                    ID1
+clientName 
+feedbackDate
+feedbackContent </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>460</x><y>456</y><w>48</w><h>112</h></coordinates><panel_attributes>lt=-
+m1=1..*
+m2=1..1
+Has v</panel_attributes><additional_attributes>10;120;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>300</x><y>584</y><w>152</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=1..*
+m2=1..1
+Works on &gt;</panel_attributes><additional_attributes>170;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>204</x><y>360</y><w>216</w><h>192</h></coordinates><panel_attributes>lt=-
+m1=1..*
+m2=1..*
+Involves &gt;</panel_attributes><additional_attributes>30;220;30;20;250;20</additional_attributes></element><element><id>Relation</id><coordinates><x>172</x><y>136</y><w>176</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=1..*
+m2=1..*
+Returns &gt;</panel_attributes><additional_attributes>200;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>420</x><y>176</y><w>72</w><h>176</h></coordinates><panel_attributes>lt=-
+m1=1..1
+m2=1..*
+Returns v</panel_attributes><additional_attributes>10;200;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>92</x><y>192</y><w>328</w><h>184</h></coordinates><panel_attributes>lt=-
+m1=1..*
+m2=1..1
+Comissions &gt;</panel_attributes><additional_attributes>390;200;10;200;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>428</x><y>440</y><w>80</w><h>24</h></coordinates><panel_attributes>taskID</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>604</x><y>384</y><w>208</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=0..1
+m2=1..1
+Records &gt;</panel_attributes><additional_attributes>240;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>532</x><y>392</y><w>80</w><h>24</h></coordinates><panel_attributes>meetingID</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>620</x><y>232</y><w>192</w><h>144</h></coordinates><panel_attributes>lt=-
+m1=1..*
+m2=1..1
+sets ^</panel_attributes><additional_attributes>200;10;200;150;10;150</additional_attributes></element><element><id>UMLClass</id><coordinates><x>532</x><y>344</y><w>96</w><h>24</h></coordinates><panel_attributes>mileStoneID</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>844</x><y>416</y><w>24</w><h>112</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;120</additional_attributes></element><element><id>UMLClass</id><coordinates><x>812</x><y>512</y><w>80</w><h>32</h></coordinates><panel_attributes>meetingNote
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>468</x><y>64</y><w>104</w><h>40</h></coordinates><panel_attributes>project completion
+--
+completionDate
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>508</x><y>96</y><w>24</w><h>256</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;300;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>516</x><y>208</y><w>96</w><h>24</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>596</x><y>200</y><w>72</w><h>40</h></coordinates><panel_attributes>
+--
+finalReport</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>196</x><y>536</y><w>96</w><h>24</h></coordinates><panel_attributes>projectMangerID</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>692</x><y>392</y><w>24</w><h>104</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;110;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>652</x><y>480</y><w>112</w><h>40</h></coordinates><panel_attributes>
+--
+actionItems</panel_attributes><additional_attributes></additional_attributes></element></diagram>

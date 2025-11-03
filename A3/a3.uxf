@@ -1,0 +1,49 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>0</x><y>370</y><w>380</w><h>270</h></coordinates><panel_attributes>AustralianFoodBase
+--
+-baseMeat: int 
+-baseGrain: int 
+-baseDairy: int 
+-baseVeg: int 
+-baseFruit: int 
+--
++super().__init__(age,gender,height,meat,dairy,grain,veg,fruit)
+-basePlot : List&lt;int&gt; 
+-userPlot: List&lt;int&gt;
+-foodType: List&lt;str&gt; 
++plotIntakeLine: plt.subplots()
++plotIntakeBar: plt.subplots()
++plotIntakePie: plt.subplots()
++plotInakeScatter: plt.subplots()
++plotIntakeBMI: plt.subplots()
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>450</x><y>440</y><w>370</w><h>140</h></coordinates><panel_attributes>GraphSaves 
+--
+
+--
++super().__init__(age,gender,height,meat,dairy.grain,veg,fruit)
++savePlot: List &lt;AustralianFoodBase&gt; 
++showPlot: List&lt;AustralianFoodBase&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>490</x><y>50</y><w>170</w><h>120</h></coordinates><panel_attributes>UserInformation
+--
+
+--
++default : Dic&lt;str&gt; 
++user_name: filename&lt;str&gt; </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>50</x><y>20</y><w>150</w><h>210</h></coordinates><panel_attributes>AustralianUser 
+--
+#age: int 
+#gender : str 
+#height: int 
+#meat: int 
+#dairy: int 
+#grain: int 
+#veg: int 
+#fruits: int
+--
+-user_bmi : int '
++get_bmi: int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>110</x><y>220</y><w>30</w><h>170</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>370</x><y>470</y><w>100</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=
+m2=0..*
+Saves To &gt;</panel_attributes><additional_attributes>80;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>190</x><y>80</y><w>320</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=
+m2=0..1
+Saves To &gt;</panel_attributes><additional_attributes>300;20;10;20</additional_attributes></element></diagram>

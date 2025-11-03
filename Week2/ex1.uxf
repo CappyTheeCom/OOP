@@ -1,0 +1,15 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>243</x><y>170</y><w>290</w><h>200</h></coordinates><panel_attributes>Circle base 
+--
++centre_a: float
++centre_b: float
++raduis: float
++sin: float 
++cos: float
+--
++__init__(centre_a, centre_b,raduis, sin, cos)
++circle_area(): float 
++circle_comp(): float 
++point_y(): float 
++point_x(): float
+
+</panel_attributes><additional_attributes></additional_attributes></element></diagram>

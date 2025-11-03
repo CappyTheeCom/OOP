@@ -1,0 +1,10 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>190</x><y>270</y><w>210</w><h>170</h></coordinates><panel_attributes>NoteBook
+--
+-notebook_id: int 
+-tag: list &lt;notebook&gt;
+-memo: string
+--
++show_note 
++search_note 
++add_note 
++modify_note</panel_attributes><additional_attributes></additional_attributes></element></diagram>

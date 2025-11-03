@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>160</x>
+      <y>240</y>
+      <w>180</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>Staff
+--
+#fname: str 
+#lname: str
+#DOB: str
+#address: list&lt;Address&gt;
+#mobileNumber: int 
+#staffId: int
+--
+add_staff() : str
+search_staff(): list
+delete_staff() : remove
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>70</x>
+      <y>450</y>
+      <w>170</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Professional_Staff
+--
+-professionalPosition: str
+-workingDays : list &lt;str&gt;
+--
++add_staff(): str
++search_staff(): list&lt;Staff&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>450</y>
+      <w>190</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Academic_Staff
+--
+-academicPosition : str
+-teachingSubject : list &lt;str&gt;
+-researchArea : str
+--
++add_staff(): str
++search_staff(): list&lt;Staff&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>160</x>
+      <y>0</y>
+      <w>190</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Address
+--
+-streetNum : int 
+-streetName : str
+-city : str
+-state : str 
+-postCode : int 
+-country : str</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>130</x>
+      <y>410</y>
+      <w>100</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>270</x>
+      <y>410</y>
+      <w>110</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;90.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>240</x>
+      <y>130</y>
+      <w>110</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1,
+m2=1.
+Has address</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+</diagram>

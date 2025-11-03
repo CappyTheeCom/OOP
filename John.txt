@@ -1,0 +1,12 @@
+{
+    "Age": 30,
+    "Gender": "M",
+    "Height": 175,
+    "Weight": 70,
+    "BMI": 22.86,
+    "Meat": "2 Daily servings",
+    "Dairy": "3 Daily servings",
+    "Grain": "5 Daily servings",
+    "Vegetable": "4 Daily servings",
+    "Fruit": "3 Daily servings"
+}

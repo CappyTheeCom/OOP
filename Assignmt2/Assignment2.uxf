@@ -1,0 +1,39 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>280</x><y>0</y><w>210</w><h>190</h></coordinates><panel_attributes>AustralinUser
+--
+#gender: string
+#age: int 
+--
++__init__()
++veg_intake()
++meat_intake() : string
++dairy_intake() : string
++grain_intake() : string
++fruit_intake()   : string
++printstatement_food() : string
++__str__()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>40</x><y>300</y><w>220</w><h>200</h></coordinates><panel_attributes>FemaleUser
+--
+-pregnant: bool 
+-bFeeding: bool 
+--
++super.__init__(age,gender)
++__init__(pregnant,bFeeding)
++veg_intake() : string
++meat_intake() : string
++dairy_intake() : string
++grain_intake() : string
++fruit_intake()   : super.fruit_intake()
++__str__() : super.__str__()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>100</x><y>220</y><w>300</w><h>100</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>280;10;10;10;10;80</additional_attributes></element><element><id>Relation</id><coordinates><x>370</x><y>220</y><w>220</w><h>100</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>10;10;200;10;200;80</additional_attributes></element><element><id>UMLClass</id><coordinates><x>500</x><y>300</y><w>200</w><h>190</h></coordinates><panel_attributes>Under18AustralianUser
+--
+
+--
++super.__init__(age,gender)
++veg_intake()  : string
++meat_intake() : string
++dairy_intake() : string
++grain_intake() : string
++fruit_intake()   : string
++__str__() : super.__str__()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>280</x><y>290</y><w>200</w><h>70</h></coordinates><panel_attributes>MaleUser
+--
+
+--
+pass</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>370</x><y>190</y><w>30</w><h>120</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element></diagram>
