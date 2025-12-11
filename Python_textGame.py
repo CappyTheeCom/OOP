@@ -62,7 +62,7 @@ class player:
         return 
     #Creating player name
     def selectPlayerName(self):
-        self.__name = input("Olease enter a name: ")
+        self.__name = input("Please enter a name: ")
 
         if len(self.__name) <= 4:
              return "Please enter a name with atleasat four characters!"
@@ -100,9 +100,81 @@ class PlayerClass(player):
           else:
                return "Input a proper class!!!"
     
-    #Creating Weapon focuses for particular classes         
+
+
+#Craeitng weapon template
+class Weapon(player):
+     def __init__(self, equiped):
+          self.__equip = equiped 
+          self.__atk = 0
+          self._prof = 0 
+          self.__lightWeapons = ["quarter-staff, short-sword, dagger, long-sword, mace, buckle, crossbow"]
+          self.__heavyWeapons = ["great-sword, great-hammer, great-mace, bow, club"]
+          self.__magicWeapons = ["tome, spells, staff, runes"]
+
+     #Creating Weapon focuses for particular classes         
      def weaponProficency(self):
-          lightWeapons = ["quarter-staff"]
+
+          #Heavy weapon profieceny 
+          if self._hp >= 130:
+               for weapons in self.__heavyWeapons:
+                    weapons 
+               return f"Please select a starting weapon"
+          #light weapon profieceny
+          if self._sp >= 130:
+               for weapons in self.__lightWeapons:
+                    weapons 
+               return f"Please select a starting weapon"
+          #magic profieceny 
+          if self._mp >= 130:
+               for weapons in self.__magicWeapons:
+                    weapons 
+               return f"Please select a starting weapon"
+          
+     #Creating weapon attack damage 
+     def weaponDmg(self):
+          #Checking if the player profiecent in health
+          if self.__equip in self.__heavyWeapons:
+               self.__atk = 10
+               for damage in range (self._hp+2, 130):
+                    self.__atk += damage 
+                    #If the range is 0 (or some how less) it reduces attack damage
+                    if self.__atk <= 0:
+                         self._atk -= 5
+                         return f"You are not profiecent to use a {self.__equip}: -5 Attack!!"
+               return f"Your {self.__equip} does {self.__atk}!"
+          
+          #checking for stamania profieceny 
+          elif self.__equip in self.__lightWeapons:
+               self.__atk = 10
+               for damage in range (self._sp+2, 130):
+                    self.__atk += damage 
+                    #If the range is 0 (or some how less) it reduces attack damage
+                    if self.__atk <= 0:
+                         self._atk -= 5
+                         return f"You are not profiecent to use a {self.__equip}: -5 Attack!!"
+               return f"Your {self.__equip} does {self.__atk}!"
+          
+          #Checking if the player profiecent in magic damage 
+          elif self.__equip in self.__magicWeapons:
+               self.__atk = 10
+               for damage in range (self._mp+2, 130):
+                    self.__atk += damage 
+                    #If the range is 0 (or some how less) it reduces attack damage
+                    if self.__atk <= 0:
+                         self._atk -= 5
+                         return f"You are not profiecent to use a {self.__equip}: -5 Attack!!"
+               return f"Your {self.__equip} does {self.__atk}!"
+
+          else:
+               return f"There no weapon equipped!!!"
+          
+
+
+          
+
+
+          
           
           
 
