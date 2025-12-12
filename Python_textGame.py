@@ -1,5 +1,5 @@
 #Creating a player based class
-class player: 
+class Player: 
     def __init__(self,name,race,age):
         self.__age = age 
         self.__name = name 
@@ -66,18 +66,19 @@ class player:
 
         if len(self.__name) <= 4:
              return "Please enter a name with atleasat four characters!"
-        elif self.__name in ["!,@,#,$,%,^,&,*,+,="]:
+        elif self.__name in ["!","@","#","$","%","^","&","*","+","="]:
              return "Your name must not have any characters!!!"
         else:
              return f"Your name is {self.__name}"
     
 #creating class archetypes 
-class PlayerClass(player):
+class PlayerClass(Player):
      #Inheriting the relevant attributes to the class type
      def __init__(self,race,health,magick,stamania,className):
           super.__init__(self, race,health,magick,stamania)
           self.__class = className 
           self.__classType = ["warrior,rogue,mage"]
+
 
     #creating different class attributes 
      def classAttributes(self):
@@ -99,83 +100,149 @@ class PlayerClass(player):
                     return f"Your {self.__class} attributes are: hp{self._hp:<15} sp{self._sp:<20} mp{self._mp:^10} "
           else:
                return "Input a proper class!!!"
+          
+
     
 
 
 #Craeitng weapon template
-class Weapon(player):
+class Weapon(Player):
      def __init__(self, equiped):
           self.__equip = equiped 
-          self.__atk = 0
-          self._prof = 0 
-          self.__lightWeapons = ["quarter-staff, short-sword, dagger, long-sword, mace, buckle, crossbow"]
-          self.__heavyWeapons = ["great-sword, great-hammer, great-mace, bow, club"]
-          self.__magicWeapons = ["tome, spells, staff, runes"]
+          self._atk = 0
+          self._lightWeapons = ["quarter-staff, short-sword, dagger, long-sword, mace, buckle, crossbow"]
+          self._heavyWeapons = ["great-sword, great-hammer, great-mace, bow, club"]
+          self._magicWeapons = ["tome, spells, staff, runes"]
 
      #Creating Weapon focuses for particular classes         
-     def weaponProficency(self):
+     def weaponType(self):
 
           #Heavy weapon profieceny 
           if self._hp >= 130:
-               for weapons in self.__heavyWeapons:
+               for weapons in self._heavyWeapons:
                     weapons 
                return f"Please select a starting weapon"
           #light weapon profieceny
           if self._sp >= 130:
-               for weapons in self.__lightWeapons:
+               for weapons in self._lightWeapons:
                     weapons 
                return f"Please select a starting weapon"
           #magic profieceny 
           if self._mp >= 130:
-               for weapons in self.__magicWeapons:
+               for weapons in self._magicWeapons:
                     weapons 
                return f"Please select a starting weapon"
           
      #Creating weapon attack damage 
      def weaponDmg(self):
           #Checking if the player profiecent in health
-          if self.__equip in self.__heavyWeapons:
-               self.__atk = 10
+          if self.__equip in self._heavyWeapons:
+               self._atk = 10
                for damage in range (self._hp+2, 130):
-                    self.__atk += damage 
+                    self._atk += damage 
                     #If the range is 0 (or some how less) it reduces attack damage
-                    if self.__atk <= 0:
+                    if self._atk <= 0:
                          self._atk -= 5
                          return f"You are not profiecent to use a {self.__equip}: -5 Attack!!"
-               return f"Your {self.__equip} does {self.__atk}!"
+               return f"Your {self.__equip} does {self._atk}!"
           
           #checking for stamania profieceny 
-          elif self.__equip in self.__lightWeapons:
-               self.__atk = 10
+          elif self.__equip in self._lightWeapons:
+               self._atk = 10
                for damage in range (self._sp+2, 130):
-                    self.__atk += damage 
+                    self._atk += damage 
                     #If the range is 0 (or some how less) it reduces attack damage
-                    if self.__atk <= 0:
+                    if self._atk <= 0:
                          self._atk -= 5
                          return f"You are not profiecent to use a {self.__equip}: -5 Attack!!"
-               return f"Your {self.__equip} does {self.__atk}!"
+               return f"Your {self.__equip} does {self._atk}!"
           
           #Checking if the player profiecent in magic damage 
-          elif self.__equip in self.__magicWeapons:
-               self.__atk = 10
+          elif self.__equip in self._magicWeapons:
+               self._atk = 10
                for damage in range (self._mp+2, 130):
-                    self.__atk += damage 
+                    self._atk += damage 
                     #If the range is 0 (or some how less) it reduces attack damage
-                    if self.__atk <= 0:
+                    if self._atk <= 0:
                          self._atk -= 5
                          return f"You are not profiecent to use a {self.__equip}: -5 Attack!!"
-               return f"Your {self.__equip} does {self.__atk}!"
-
+               return f"Your {self.__equip} does {self._atk}!"
           else:
                return f"There no weapon equipped!!!"
+
+
+#Creating light weapon profieceny and skills
+class LightWeapons(Weapon):
+     #Creating the weapon dictonary to allow for dynamically adding 
+     weaponTypes = {}
+
+     def adding_weapons(self):
+          for weapons in self._lightWeapons:
+               LightWeapons.weaponTypes[weapons] = 0
+          return 
+
+     #adding incremental weapon profieceny 
+     def weaponProfieceny(self):
+          selectWeapon = input("Please select a weapon to add profieceny into: ")
+          #Checking if the weapon within the light weapon types
+          if selectWeapon in LightWeapons.weaponTypes:
+               LightWeapons.weaponTypes[selectWeapon] += 5
+               return f"{selectWeapon} current profieceny: {LightWeapons.weaponTypes[selectWeapon]}"
+          else:
+               return "Please select a proper weapon!!"
+
+
+#Creating heavy weapon profieceny and skills
+class HeavyWeapons(Weapon):
+     #Creating the weapon dictonary to allow for dynamically adding 
+     weaponTypes = {}
+     def adding_weapons(self):
+          for weapons in self._lightWeapons:
+               HeavyWeapons.weaponTypes[weapons] = 0
+          return 
+
+     #adding incremental weapon profieceny 
+     def weaponProfieceny(self):
+          selectWeapon = input("Please select a weapon to add profieceny into: ")
+
+          #Checking if the weapon within the light weapon types
+          if selectWeapon in HeavyWeapons.weaponTypes:
+               HeavyWeapons.weaponTypes[selectWeapon] += 5
+               return f"{selectWeapon} current profieceny: {HeavyWeapons.weaponTypes[selectWeapon]}"
+          else:
+               return "Please select a proper weapon!!"
+          
+
+#Creating light weapon profieceny and skills
+class MagicWeapons(Weapon):
+     #Creating the weapon dictonary to allow for dynamically adding 
+     weaponTypes = {}
+     def adding_weapons(self):
+          for weapons in self._lightWeapons:
+               MagicWeapons.weaponTypes[weapons] = 0
+          return 
+
+     #adding incremental weapon profieceny 
+     def weaponProfieceny(self):
+          selectWeapon = input("Please select a weapon to add profieceny into: ")
+
+          #Checking if the weapon within the light weapon types
+          if selectWeapon in MagicWeapons.weaponTypes:
+               MagicWeapons.weaponTypes[selectWeapon] += 5
+               return f"{selectWeapon} current profieceny: {MagicWeapons.weaponTypes[selectWeapon]}"
+          else:
+               return "Please select a proper weapon!!"
+          
+     
+
+          
+
+     
+          
+
           
 
 
-          
-
-
-          
-          
           
 
                     
