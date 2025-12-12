@@ -9,6 +9,7 @@ class Player:
         self._sp = 100
         self.__playableRace = ["human","dwarf","elf","tiefling","half-elf","orc"]
 
+
     #Creating a playable race
     def playAbleRace(self):
 
@@ -21,19 +22,19 @@ class Player:
     def playAbleAge(self):
          
          #choosing within elfs and dwarfs
-         if self.__race in ["elf","half-elf","dwarf","orc"]:
+         if self._race in ["elf","half-elf","dwarf","orc"]:
               if 30 <= self.__age <= 820:
                    return f"Your age is {self.__age}"
               else:
                    return "Please select a proper age range!!"
          #Orcs and tieflings share the same age range
-         elif self.__race in ["tiefling, orc"]:
+         elif self._race in ["tiefling, orc"]:
               if 30 <= self.__age <= 500:
                    return f"Your age is {self.__age}"
               else:
                    return "Please select a proper age!!"
          #Humans will have typical age ranges
-         elif self.__race in ["human"]:
+         elif self._race in ["human"]:
             if 19 <= self.__age <= 80:
                  return f"Your age is {self.__age}"
             else:
@@ -41,13 +42,13 @@ class Player:
    
     #Allocating player health        
     def playerBonusStats(self):
-         if self.__race in ["dwarf, orc"]:
+         if self._race in ["dwarf, orc"]:
               int(self._hp) += 30
               return f"Your current hp with race bonus: {self._hp}"
-         elif self.__race in ["elf,half-elf,tiefling"]:
+         elif self._race in ["elf,half-elf,tiefling"]:
               int(self._mp) += 30 
               return f"Your current mp with race bonus: {self._mp}"
-         elif self.__race in {"human"}:
+         elif self._race in {"human"}:
               int(self._hp) += 10
               int(self._mp) += 10 
               int(self._sp) += 10 
@@ -60,6 +61,7 @@ class Player:
              race
         self._race = input("Please select a race: ")
         return 
+    
     #Creating player name
     def selectPlayerName(self):
         self.__name = input("Please enter a name: ")
@@ -70,7 +72,10 @@ class Player:
              return "Your name must not have any characters!!!"
         else:
              return f"Your name is {self.__name}"
+
+
     
+
 #creating class archetypes 
 class PlayerClass(Player):
      #Inheriting the relevant attributes to the class type
@@ -106,8 +111,9 @@ class PlayerClass(Player):
 
 
 #Craeitng weapon template
-class Weapon(Player):
-     def __init__(self, equiped):
+class Weapon:
+     def __init__(self, player, equiped):
+          self._player = player
           self.__equip = equiped 
           self._atk = 0
           self._lightWeapons = ["quarter-staff, short-sword, dagger, long-sword, mace, buckle, crossbow"]
@@ -115,20 +121,20 @@ class Weapon(Player):
           self._magicWeapons = ["tome, spells, staff, runes"]
 
      #Creating Weapon focuses for particular classes         
-     def weaponType(self):
+     def weaponStart(self):
 
           #Heavy weapon profieceny 
-          if self._hp >= 130:
+          if self._player._hp >= 130:
                for weapons in self._heavyWeapons:
                     weapons 
                return f"Please select a starting weapon"
           #light weapon profieceny
-          if self._sp >= 130:
+          if self._player._sp >= 130:
                for weapons in self._lightWeapons:
                     weapons 
                return f"Please select a starting weapon"
           #magic profieceny 
-          if self._mp >= 130:
+          if self._player._mp >= 130:
                for weapons in self._magicWeapons:
                     weapons 
                return f"Please select a starting weapon"
@@ -138,7 +144,7 @@ class Weapon(Player):
           #Checking if the player profiecent in health
           if self.__equip in self._heavyWeapons:
                self._atk = 10
-               for damage in range (self._hp+2, 130):
+               for damage in range (self._player._hp+2, 130):
                     self._atk += damage 
                     #If the range is 0 (or some how less) it reduces attack damage
                     if self._atk <= 0:
@@ -149,7 +155,7 @@ class Weapon(Player):
           #checking for stamania profieceny 
           elif self.__equip in self._lightWeapons:
                self._atk = 10
-               for damage in range (self._sp+2, 130):
+               for damage in range (self._player._sp+2, 130):
                     self._atk += damage 
                     #If the range is 0 (or some how less) it reduces attack damage
                     if self._atk <= 0:
@@ -160,7 +166,7 @@ class Weapon(Player):
           #Checking if the player profiecent in magic damage 
           elif self.__equip in self._magicWeapons:
                self._atk = 10
-               for damage in range (self._mp+2, 130):
+               for damage in range (self._player._mp+2, 130):
                     self._atk += damage 
                     #If the range is 0 (or some how less) it reduces attack damage
                     if self._atk <= 0:
