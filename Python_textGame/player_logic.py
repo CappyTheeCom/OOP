@@ -1,3 +1,5 @@
+import random
+
 #Creating a player based class
 class Player: 
     def __init__(self,name,race,age):
@@ -43,15 +45,15 @@ class Player:
     #Allocating player health        
     def playerBonusStats(self):
          if self._race in ["dwarf, orc"]:
-              int(self._hp) += 30
+              self._hp += 30
               return f"Your current hp with race bonus: {self._hp}"
          elif self._race in ["elf,half-elf,tiefling"]:
-              int(self._mp) += 30 
+              self._mp += 30 
               return f"Your current mp with race bonus: {self._mp}"
          elif self._race in {"human"}:
-              int(self._hp) += 10
-              int(self._mp) += 10 
-              int(self._sp) += 10 
+              self._hp += 10
+              self._mp += 10 
+              self._sp += 10 
               return f"Your race bonus is +10 across all stats!"
          
          
@@ -74,15 +76,14 @@ class Player:
              return f"Your name is {self.__name}"
 
 
-    
-
 #creating class archetypes 
 class PlayerClass(Player):
      #Inheriting the relevant attributes to the class type
-     def __init__(self,race,health,magick,stamania,className):
-          super.__init__(self, race,health,magick,stamania)
+     def __init__(self,race,age, health,magick,stamania,className):
+          super.__init__(self, race,age,health,magick,stamania)
           self.__class = className 
           self.__classType = ["warrior,rogue,mage"]
+          self._dp = 0
 
 
     #creating different class attributes 
@@ -92,30 +93,50 @@ class PlayerClass(Player):
                     self._hp += 50 
                     self._mp -= 30
                     self._sp += 10
+                    self._dp += 15
                     return f"Your {self.__class} attributes are: hp{self._hp:<15} sp{self._sp:<20} mp{self._mp:^10} "
                elif self.__class == "rogue":
                     self._hp -= 10 
                     self._mp += 15 
                     self._sp += 50 
+                    self._dp += 10
                     return f"Your {self.__class} attributes are: hp{self._hp:<15} sp{self._sp:<20} mp{self._mp:^10} "
                elif self.__class == "mage":
                     self._hp -= 20 
                     self._mp += 50 
-                    self._sp += 15 
+                    self._sp += 15
+                    self._dp += 5
                     return f"Your {self.__class} attributes are: hp{self._hp:<15} sp{self._sp:<20} mp{self._mp:^10} "
           else:
                return "Input a proper class!!!"
           
+     
+     #Creating character hit chance
+     def classDefense(self, enemy):
+          enemyDmgRoll = random.randint(0, enemy._atk)
+          
+          #If enemy damage is less than the armor class
+          if enemyDmgRoll <= self._dp:
+               return "Eneemy has missed there hit!!!"
+          #If enemy damage is greater than the armor class
+          elif enemyDmgRoll > self._dp:
+               #Enemy damage
+               enemyDmg = random.randint(0, enemy._atk - self._dp)
+               
+               self._hp -= enemyDmg
+               return f"The enemy has landed a hit. You take {enemyDmg} damage!!"
+          #If something else happens that is not met by the conditions
+          else:
+               return f"An error has occurred!!"
 
-    
-
-
+              
 #Craeitng weapon template
 class Weapon:
+     #Using player as a way to pass the method through the class
      def __init__(self, player, equiped):
           self._player = player
           self.__equip = equiped 
-          self._atk = 0
+          self._weaponAtk = 0
           self._lightWeapons = ["quarter-staff, short-sword, dagger, long-sword, mace, buckle, crossbow"]
           self._heavyWeapons = ["great-sword, great-hammer, great-mace, bow, club"]
           self._magicWeapons = ["tome, spells, staff, runes"]
@@ -145,12 +166,12 @@ class Weapon:
           if self.__equip in self._heavyWeapons:
                self._atk = 10
                for damage in range (self._player._hp+2, 130):
-                    self._atk += damage 
+                    self._weaponAtk += damage 
                     #If the range is 0 (or some how less) it reduces attack damage
-                    if self._atk <= 0:
-                         self._atk -= 5
+                    if self._weaponAtk <= 0:
+                         self._weaponAtk -= 5
                          return f"You are not profiecent to use a {self.__equip}: -5 Attack!!"
-               return f"Your {self.__equip} does {self._atk}!"
+               return f"Your {self.__equip} does {self._weaponAtk}!"
           
           #checking for stamania profieceny 
           elif self.__equip in self._lightWeapons:
@@ -158,8 +179,8 @@ class Weapon:
                for damage in range (self._player._sp+2, 130):
                     self._atk += damage 
                     #If the range is 0 (or some how less) it reduces attack damage
-                    if self._atk <= 0:
-                         self._atk -= 5
+                    if self._weaponAtk <= 0:
+                         self._weaponAtk -= 5
                          return f"You are not profiecent to use a {self.__equip}: -5 Attack!!"
                return f"Your {self.__equip} does {self._atk}!"
           
@@ -167,12 +188,12 @@ class Weapon:
           elif self.__equip in self._magicWeapons:
                self._atk = 10
                for damage in range (self._player._mp+2, 130):
-                    self._atk += damage 
+                    self._weaponAtk += damage 
                     #If the range is 0 (or some how less) it reduces attack damage
                     if self._atk <= 0:
-                         self._atk -= 5
+                         self._weaponAtk -= 5
                          return f"You are not profiecent to use a {self.__equip}: -5 Attack!!"
-               return f"Your {self.__equip} does {self._atk}!"
+               return f"Your {self.__equip} does {self._weaponAtk}!"
           else:
                return f"There no weapon equipped!!!"
 
