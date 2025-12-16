@@ -72,8 +72,6 @@ class Player:
              return "Your name must not have any characters!!!"
         else:
              return f"Your name is {self.__name}"
-
-
     
 
 #creating class archetypes 
@@ -238,6 +236,9 @@ class MagicWeapons(Weapon):
                return f"{selectWeapon} current profieceny: {MagicWeapons.weaponTypes[selectWeapon]}"
           else:
                return "Please select a proper weapon!!"
+          
+
+
           
      
 
