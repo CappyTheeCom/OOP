@@ -1,11 +1,13 @@
 import random
+import player_logic
 
 #Making enemy template
-class Enenmy:
-     def __init__(self):
+class Enemy:
+     def __init__(self, name):
           self._enemyHp = 100 
           self._enemyDp = 10 
           self._atk = 15 
+          self._name = name
     
      #Creating enemy defensive points
      def enemyDF(self,player):
@@ -26,22 +28,52 @@ class Enenmy:
           deathState = 0
 
           if self._enemyHp <= 0:
-               print("Enemy is in dying state!!!")
+               print(f"{self._name} is in dying state!!!")
 
           while True: 
 
                #Creating condiitonal statement for the save state 
                if saveRoll >= self._enemyDp:
                     saveState += 1 
-                    print(f"Enemy has achieved {saveRoll} saves!!")
+                    print(f"{self._name} has achieved {saveRoll} saves!!")
                else:
                     deathState += 1
-                    print("Enemy has failed a save roll!!!")
+                    print(f"{self._name} has failed a save roll!!!")
                
                #Breaking the while loop if either state has been achieved 
                if saveRoll == 3:
                     self._enemyHp = 20 + self._enemyDp
-                    return f"The Enemy returns to combat with {self._enemyHp}HP"
+                    return f"The {self._name} returns to combat with {self._enemyHp}HP"
                elif deathState == 3:
-                    return "The enemy has died"
+                    return f"The {self._name} has died"
 
+#Creating bandit enemy type               
+class Bandit(Enemy):
+
+     #Creating name
+     def __init__(self, name=None):
+          super.__init__(name)
+          if self._name == None:
+               name = "Bandit"
+     
+     #Creating bandit attack pattern 
+     def banditAtk(self):
+          attack = random.randint(0,self._atk)
+          return attack
+
+
+#Creating wolf enemy type               
+class Wolf(Enemy):
+
+     #Creating name
+     def __init__(self, name=None):
+          super.__init__(name)
+          if self._name == None:
+               name = "Wolf"
+     
+     #Creating wolf attack pattern 
+     def banditAtk(self):
+          attack = random.randint(0,self._atk)
+          return attack
+          
+     
