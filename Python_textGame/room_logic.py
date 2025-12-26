@@ -6,53 +6,50 @@ class DungeonRooms:
 
     #Naming the dungeon room type
     def __init__(self):
-        self._roomType = ["Trap-room","Arena-room","Merchant-room","Rest-Room","Mini-Boss"]
-        self._currentPlay = []
+        self._roomType = ["Trap-room","Arena-room","Merchant-room","Rest-room","Mini-boss"]
+        self._currentRooms = 0
+        self._currentPlay = {"Trap-room"  : 0,
+                             "Arena-room" : 0,
+                             "Merchant-room" : 0,
+                             "Rest-room" : 0,
+                             "Mini-boss" : 0,
+                             "Boss-room": 1}
+        self._roomSequence = []
+        self._currentRoomIndex = 0
+
 
 
     #Creating length of the dungeon 
     def select_length(self):
         #Asking for user dungeon length
-        user_length = input("Please select a dungeon length (Short, Meduim, Long): ")
+        user_length = input("Please select a dungeon length (Short, Medium, Long): ")
         
         #making user_length universal 
-        user_length.lower()
+        user_length = user_length.lower()
         
         #Applying coniditional statements for each room length
         if user_length == "short":
-            dungeon_rooms = random.randint(5,7)
-            
-            #for every randomly selected room, the corrosponding function will be applied in relation to said room 
-            for rooms in range (1,dungeon_rooms+1):
-                room_selection = random.choice(self._roomType)
-                self._currentPlay.append(room_selection)
-            else:
-                self._currentPlay.append("Boss-room")
-                return
-                
+            self._currentRooms = random.randint(5,7)
+        elif user_length == "medium":
+            self._currentRooms = random.randint(7,10)
+        elif user_length ==  "long":
+            self._currentRooms = random.randint(10,15)
+        
+        for i in range(self._currentRooms):
+            room = random.choice(self._roomType)
+            self._currentPlay[room] += 1
+            self._roomSequence.append(room)
 
-        #Meduim sized room and selection
-        elif user_length == "meduim":
-            dungeon_rooms = random.randint(8,12)
+        
+        return self._roomSequence
 
-            for rooms in range (1, dungeon_rooms+1):
-                room_selection = random.choice(self._roomType)
-                self._currentPlay.append(room_selection)
-            else:
-                self._currentPlay.append("Boss-room")
-                return
-
-        #Long sized room and selection
-        elif user_length == "long":
-            dungeon_rooms = random.randint(12, 16)
-
-            for rooms in range (1, dungeon_rooms+1):
-                room_selection = random.choice(self._roomType)
-                self._currentPlay.append(room_selection)
-            else:
-                self._currentPlay.append("Boss-room")
-                return
-            
+    #Creating player movement 
+    def next_room(self):
+        if self._currentRoomIndex < self._currentRooms - 1:
+            self._currentRooms += 1   
+            return f"You have moved into the {self._currentRoomIndex} room!!"
+        else:
+            return f"You have reached the end!!"                    
 
 #Creating room types 
 class TrapRoom(DungeonRooms):
