@@ -74,6 +74,12 @@ class Player:
              return "Your name must not have any characters!!!"
         else:
              return f"Your name is {self.__name}"
+        
+    #Creating player damage
+    def playerDamge(self,damage):
+         currentPlayerHp = self._hp - damage 
+         return currentPlayerHp
+         
 
 
 #creating class archetypes 
@@ -85,7 +91,11 @@ class PlayerClass(Player):
           self.__classType = ["warrior,rogue,mage"]
           self._dp = 0
 
-
+     #Creating getter variable for defense points 
+     def getPlayerDp(self):
+         return self._dp 
+        
+     
     #creating different class attributes 
      def classAttributes(self):
           if self.__class in self.__classType:

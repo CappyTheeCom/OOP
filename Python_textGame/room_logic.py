@@ -1,8 +1,7 @@
 #Creating dungeon room type 
 import random
 import enemy_logic
-import player_logic
-
+from player_logic import PlayerClass
 class DungeonRooms:
 
     #Naming the dungeon room type
@@ -63,10 +62,24 @@ class TrapRoom(DungeonRooms):
 
     #Creating a chance to cycle through whether the player recieves a debuff or buff by entering the room
     def statusEffect(self):
-
+        #Chccking if trap rooms are inside the list and will play a message if its in the current room!!
         if "Trap-room" in self._currentPlay:
             print("You have entered a trapped room!\n " \
-                  "Roll saving dice to recieve a status effect!")
+                  "Rolling saving dice to recieve a status effect!")
+            
+            #Creating a save roll from the trap room
+            playerSaveRoll = random.randint(0, 20) + PlayerClass.getPlayerDp()
+            
+            #Creating a fail method for the trap-room (WIll update the win condition later!)
+            if playerSaveRoll < PlayerClass.getPlayerDp(): 
+                playerDamage = (PlayerClass.getPlayerDp - playerSaveRoll) *10
+                PlayerClass.playerDamge(playerDamage)
+                return f"You have recieved {playerDamage} from failing the trap-room!!!"
+            else:
+                return f"You have escaped the trap-room!!"
+
+            
+
 
 
 
