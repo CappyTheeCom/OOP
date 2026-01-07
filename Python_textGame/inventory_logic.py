@@ -1,19 +1,58 @@
-import enemy_logic
+import enemy_logic as enemyInventory
 
 #Creating player inventory for merchant usage and proficeny bonuses
 class PlayerInventory: 
-    #Checking for current armor, weapon and gold usage
-    def __init__(self, weapon, armor, potion, gold):
-        self._weapon = weapon
-        self._armor =  armor 
-        self._potion = potion
-        self._gold = gold 
+    #Creating a player instant variable that can be passed when defining player actions and health 
+    def __init__(self,player):
+        self.__player = player 
         
         #Creating a dictonary for manipulation
-        self.player_inventory = {"gold": self._gold,
-                                 "weapon-equipped": self._weapon,
-                                 "armor-equipped": self._armor,
-                                 "potion-equipped": self._potion}
-
+        self._playerInventory = {"gold": 0,
+                                 "weapon": "None",
+                                 "armor": "None",
+                                 "potion": "None"}
     
-   
+    #Gather gold from dead enemies
+    def pickingGold(self, name):
+        
+        #Checking for the bandit name
+        if name == "Bandit":
+            #Creating bandit class
+            banditGold = enemyInventory.Bandit()
+            self._playerInventory["gold"] += banditGold.enemyGold()
+        #Checking for the wolf name
+        elif name == "Wolf":
+            #Creating wolf class 
+            wolfGold = enemyInventory.Wolf()
+            self._playerInventory["gold"] += wolfGold.enemyGold()
+
+    #Updating the player inventory with a new weapon 
+    def newWeapon(self, new_weapon):
+        self._playerInventory["weapon-equipped"] = new_weapon
+        return f"You have equipped {self._playerInventory.get("weapon")}"
+    
+    #Updating the player inventory with a new armor
+    def newArmor(self, new_armor):
+        self._playerInventory["armor"] = new_armor
+        return f"You have equipped {self._playerInventory.get("armor")}"
+    
+    #Updating player potion slots
+    def newPotion(self, new_potion):
+        self._playerInventory["potion"] = new_potion
+        return f"You have equipped {self._playerInventory.get("potion")}"
+    
+    def usingPotion(self):
+        #Looping through the dictionary to ensure its inside the player inventory
+        potion_name = self._playerInventory.get("potion")
+            #If the player potion is health
+        if potion_name == "Health-potion":
+            self.__player.playerHeal(50)
+            self._playerInventory.get("potion") = "None"
+            return f"You used a health potion: {self.__player.playerHealth()}hp"
+        return "No potions were found!"
+
+
+
+
+
+

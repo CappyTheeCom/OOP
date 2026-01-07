@@ -10,8 +10,17 @@ class Player:
         self._mp = 100 
         self._sp = 100
         self.__playableRace = ["human","dwarf","elf","tiefling","half-elf","orc"]
-
-
+    
+    #Checking for the player health, stamania and mana 
+    def playerHealth(self):
+         return self._hp
+    
+    def playerStamania(self):
+         return self._sp
+    
+    def playerMagic(self):
+         return self._mp
+    
     #Creating a playable race
     def playAbleRace(self):
 
@@ -79,6 +88,11 @@ class Player:
     def playerDamge(self,damage):
          currentPlayerHp = self._hp - damage 
          return currentPlayerHp
+    
+    def playerHeal(self, potion):
+         currentPlayerHp = self._hp + potion
+         return currentPlayerHp
+         
          
 
 
