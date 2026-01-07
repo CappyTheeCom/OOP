@@ -1,5 +1,5 @@
 import random
-import player_logic
+from player_logic import Weapon
 
 #Making enemy template
 class Enemy:
@@ -10,14 +10,14 @@ class Enemy:
           self._name = name
     
      #Creating enemy defensive points
-     def enemyDF(self,player):
-          playerDmgRoll = random.randint(0,player._weaponAtk)
+     def enemyDF(self, weapon):
+          playerDmgRoll = random.randint(0,weapon)
 
           if playerDmgRoll <= self._enemyDp:
                playerDmg = 0 
                return f"Player did {playerDmg}dmg to enemy!!!"
           elif playerDmgRoll > self._enemyDp:
-               playerDmg = random.randint(0, player._weaponAtk) - self._enemyDp
+               playerDmg = random.randint(0, weapon) - self._enemyDp
                return f"Player did {playerDmg}dmg to enemy!!!"
           
      #Creating enemy death state 
@@ -46,6 +46,14 @@ class Enemy:
                     return f"The {self._name} returns to combat with {self._enemyHp}HP"
                elif deathState == 3:
                     return f"The {self._name} has died"
+     
+     #Enemy gold drop chance
+     def enemyGold(self):
+          if self._enemyHp <= 0:
+               enemyDrop = random.randint(1,20)
+               print(f"Enemy dropped {enemyDrop} Gold!")
+               return enemyDrop
+
 
 #Creating bandit enemy type               
 class Bandit(Enemy):
@@ -75,5 +83,5 @@ class Wolf(Enemy):
      def banditAtk(self):
           attack = random.randint(0,self._atk)
           return attack
-          
      
+          

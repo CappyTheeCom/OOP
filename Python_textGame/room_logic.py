@@ -65,7 +65,7 @@ class TrapRoom(DungeonRooms):
                   "Rolling saving dice to recieve a status effect!")
             
             #Creating a save roll from the trap room
-            playerSaveRoll = random.randint(0, 20) + PlayerClass.getPlayerDp()
+            playerSaveRoll = random.randint(0, 20)
             
             #Creating a fail method for the trap-room (WIll update the win condition later!)
             if playerSaveRoll < PlayerClass.getPlayerDp(): 
@@ -74,8 +74,13 @@ class TrapRoom(DungeonRooms):
                 return f"You have recieved {playerDamage} from failing the trap-room!!!"
             else:
                 return f"You have escaped the trap-room!!"
+    
 
-            
+#Creating merchant room and purchasing items
+class MerchantRoom(DungeonRooms):
+    
+    def __init__(self):
+        super().__init__()
 
 
 
