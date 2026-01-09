@@ -12,13 +12,13 @@ class Player:
         self.__playableRace = ["human","dwarf","elf","tiefling","half-elf","orc"]
     
     #Checking for the player health, stamania and mana 
-    def playerHealth(self):
+    def getplayerHealth(self):
          return self._hp
     
-    def playerStamania(self):
+    def getplayerStamania(self):
          return self._sp
     
-    def playerMagic(self):
+    def getplayerMagic(self):
          return self._mp
     
     #Creating a playable race
@@ -89,10 +89,13 @@ class Player:
 #creating class archetypes 
 class PlayerClass(Player):
      #Inheriting the relevant attributes to the class type
-     def __init__(self,race,age, health,magick,stamania,className):
-          super.__init__(self, race,age,health,magick,stamania)
-          self.__class = className 
-          self.__classType = ["warrior,rogue,mage"]
+     def __init__(self,name,race,age,className):
+          super().__init__(name,race,age)
+          self.__class = className
+          self._weaponAttributes = {"Strength" : 10,
+                                    "Intelligence": 10, 
+                                    "Dexterity": 10}  
+          self.__classType = ["warrior","rogue","mage"]
           self._dp = 0
 
      #Creating getter variable for defense points 
@@ -107,18 +110,27 @@ class PlayerClass(Player):
                     self._mp -= 30
                     self._sp += 10
                     self._dp += 15
-                    return f"Your {self.__class} attributes are: hp{self._hp:<15} sp{self._sp:<20} mp{self._mp:^10} "
+                    self._weaponAttributes["Strength"] += 8
+                    self._weaponAttributes["Intelligence"] -= 2
+                    self._weaponAttributes["Dexterity"] += 2
+                    return f"Your {self.__class} attributes are: hp:{self._hp:<15} sp:{self._sp:<15} mp:{self._mp:<15} "
                elif self.__class == "rogue":
                     self._hp -= 10 
                     self._mp += 15 
                     self._sp += 50 
                     self._dp += 10
+                    self._weaponAttributes["Strength"] += 2
+                    self._weaponAttributes["Intelligence"] += 2
+                    self._weaponAttributes["Dexterity"] += 6
                     return f"Your {self.__class} attributes are: hp{self._hp:<15} sp{self._sp:<20} mp{self._mp:^10} "
                elif self.__class == "mage":
                     self._hp -= 20 
                     self._mp += 50 
                     self._sp += 15
                     self._dp += 5
+                    self._weaponAttributes["Strength"] -= 2
+                    self._weaponAttributes["Intelligence"] += 8
+                    self._weaponAttributes["Dexterity"] += 2
                     return f"Your {self.__class} attributes are: hp{self._hp:<15} sp{self._sp:<20} mp{self._mp:^10} "
           else:
                return "Input a proper class!!!"
@@ -130,35 +142,37 @@ class Weapon:
      def __init__(self, player):
           self._player = player
           self._weaponAtk = 0
-          self._lightWeapons = ["quarter-staff, short-sword, dagger, long-sword, mace, buckle, crossbow"]
-          self._heavyWeapons = ["great-sword, great-hammer, great-mace, bow, club"]
-          self._magicWeapons = ["tome, spells, staff, runes"]
+          self._lightWeapons = ["quarter-staff", "short-sword", "dagger", "long-sword", "mace", "buckle", "crossbow"]
+          self._heavyWeapons = ["great-sword", "great-hammer", "great-mace", "bow", "club"]
+          self._magicWeapons = ["tome", "spells", "staff", "runes"]
 
      #Creating Weapon focuses for particular classes         
      def weaponStart(self):
 
           #Heavy weapon profieceny 
           if self._player._hp >= 130:
+               print("Heavy weapons available: ", end='')
                for weapons in self._heavyWeapons:
-                    weapons 
-               return f"Please select a starting weapon"
+                    print(weapons, end='') 
+               return 
           #light weapon profieceny
           if self._player._sp >= 130:
+               print("Light weapons available: ", end='')
                for weapons in self._lightWeapons:
-                    weapons 
-               return f"Please select a starting weapon"
+                    print(weapons, end='') 
+               return 
           #magic profieceny 
+          print("Magic weapons available: ", end='')
           if self._player._mp >= 130:
                for weapons in self._magicWeapons:
-                    weapons 
-               return f"Please select a starting weapon"
+                    print(weapons, end='') 
+               return 
           
      #Creating weapon attack damage 
      def weaponDmg(self, weapon):
           #Checking if the player profiecent in health
           if weapon in self._heavyWeapons:
-               self._atk = 10
-               for damage in range (self._player._hp+2, 130):
+               for damage in range (self._player._hp, 130+5):
                     self._weaponAtk += damage 
                     #If the range is 0 (or some how less) it reduces attack damage
                     if self._weaponAtk <= 0:
@@ -168,8 +182,7 @@ class Weapon:
           
           #checking for stamania profieceny 
           elif weapon in self._lightWeapons:
-               self._atk = 10
-               for damage in range (self._player._sp+2, 130):
+               for damage in range (self._player._sp, 130+5):
                     self._atk += damage 
                     #If the range is 0 (or some how less) it reduces attack damage
                     if self._weaponAtk <= 0:
@@ -179,8 +192,7 @@ class Weapon:
           
           #Checking if the player profiecent in magic damage 
           elif weapon in self._magicWeapons:
-               self._atk = 10
-               for damage in range (self._player._mp+2, 130):
+               for damage in range (self._player._mp, 130+5):
                     self._weaponAtk += damage 
                     #If the range is 0 (or some how less) it reduces attack damage
                     if self._atk <= 0:
@@ -189,6 +201,10 @@ class Weapon:
                return f"Your {weapon} does {self._weaponAtk}!"
           else:
                return f"There no weapon equipped!!!"
+     
+     #Getting weapon stat 
+     def getWeapomAtk(self):
+          return self._weaponAtk
 
 
 #Creating light weapon profieceny and skills

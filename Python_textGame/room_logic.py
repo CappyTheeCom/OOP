@@ -16,8 +16,6 @@ class DungeonRooms:
         self._roomSequence = []
         self._currentRoomIndex = 0
 
-    def getCurrentRooms(self):
-        return self._currentRooms
 
     #Creating length of the dungeon 
     def select_length(self):
@@ -29,11 +27,11 @@ class DungeonRooms:
         
         #Applying coniditional statements for each room length
         if user_length == "short":
-            self._currentRooms = random.randint(5,7)
+            self._currentRooms += random.randint(5,7)
         elif user_length == "medium":
-            self._currentRooms = random.randint(7,10)
+            self._currentRooms += random.randint(7,10)
         elif user_length ==  "long":
-            self._currentRooms = random.randint(10,15)
+            self._currentRooms += random.randint(10,15)
         
         for i in range(self._currentRooms):
             room = random.choice(self._roomType)
@@ -42,6 +40,9 @@ class DungeonRooms:
 
         
         return self._roomSequence
+    
+    def getCurrentRooms(self):
+        return self._currentRooms
 
     #Creating player movement 
     def next_room(self):
@@ -126,8 +127,9 @@ class BossRoom(DungeonRooms):
     def __init__(self):
         super.__init__()
     
+    #Creating a simple boss room for the enemy
     def bossEncounter(self, boss):
-        f"You have encoutnered an {boss}"
+        print(f"You have encoutnered an {boss}")
         presentEnemy = 1 
 
         if presentEnemy == 0:

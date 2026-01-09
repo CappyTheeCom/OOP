@@ -28,18 +28,18 @@ class PlayerInventory:
 
     #Updating the player inventory with a new weapon 
     def newWeapon(self, new_weapon):
-        self._playerInventory["weapon-equipped"] = new_weapon
-        return f"You have equipped {self._playerInventory.get("weapon")}"
+        self._playerInventory["weapon"] = new_weapon
+        return f'You have equipped {self._playerInventory.get("weapon")}'
     
     #Updating the player inventory with a new armor
     def newArmor(self, new_armor):
         self._playerInventory["armor"] = new_armor
-        return f"You have equipped {self._playerInventory.get("armor")}"
+        return f'You have equipped {self._playerInventory.get("armor")}'
     
     #Updating player potion slots
     def newPotion(self, new_potion):
         self._playerInventory["potion"] = new_potion
-        return f"You have equipped {self._playerInventory.get("potion")}"
+        return f'You have equipped {self._playerInventory.get("potion")}'
     
     def usingPotion(self):
         #Looping through the dictionary to ensure its inside the player inventory
@@ -47,7 +47,7 @@ class PlayerInventory:
             #If the player potion is health
         if potion_name == "Health-potion":
             self.__player.playerHeal(50)
-            self._playerInventory.get("potion") = "None"
+            self._playerInventory.get("potion") == "None"
             return f"You used a health potion: {self.__player.playerHealth()}hp"
         return "No potions were found!"
 
@@ -58,7 +58,7 @@ class PlayerInventory:
         if selectItem in potionList:
             self._playerInventory["potion"] = selectItem
             self._playerInventory["gold"] -= 50
-            return f"You have purchased {self._playerInventory.get("potion")}\n"
+            return f'You have purchased {self._playerInventory.get("potion")}\n'
         elif selectItem == "e":
             return f"You have left the shop!"
         else:
