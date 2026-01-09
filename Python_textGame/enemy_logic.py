@@ -9,17 +9,6 @@ class Enemy:
           self._atk = 15 
           self._name = name
     
-     #Creating enemy defensive points
-     def enemyDF(self, weapon):
-          playerDmgRoll = random.randint(0,weapon)
-
-          if playerDmgRoll <= self._enemyDp:
-               playerDmg = 0 
-               return f"Player did {playerDmg}dmg to enemy!!!"
-          elif playerDmgRoll > self._enemyDp:
-               playerDmg = random.randint(0, weapon) - self._enemyDp
-               return f"Player did {playerDmg}dmg to enemy!!!"
-          
      #Creating enemy death state 
      def enemyDeathState(self):
           #creating save rolls
@@ -29,6 +18,7 @@ class Enemy:
 
           if self._enemyHp <= 0:
                print(f"{self._name} is in dying state!!!")
+               return
 
           while True: 
 
@@ -67,7 +57,7 @@ class Bandit(Enemy):
      #Creating bandit attack pattern 
      def banditAtk(self):
           attack = random.randint(0,self._atk)
-          return attack
+          return f"You have taken {attack}dmg"
 
 
 #Creating wolf enemy type               
@@ -80,8 +70,29 @@ class Wolf(Enemy):
                name = "Wolf"
      
      #Creating wolf attack pattern 
-     def banditAtk(self):
+     def wolfAtk(self):
           attack = random.randint(0,self._atk)
-          return attack
+          return f"You have taken {attack}dmg"
      
+
+class Ogre(Enemy):
+     
+     #Changing stats to make it a more dealy encounter 
+     def __init__(self, name=None):
+          super.__init__(name)
+          if self._name == None:
+               name = "Orge"
           
+          self._enemyHp = 250 
+          self._enemyDp = 15
+          self._atk = 20
+     
+     def orgeAtk(self):
+          attack = random.randint(0,self._atk)
+
+          if attack > 15:
+               stun = f"You have taken {attack}dmg and are Stunned"
+               return stun
+          else:
+               return f"You have taken {attack}dmg"
+

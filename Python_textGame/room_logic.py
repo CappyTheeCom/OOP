@@ -1,23 +1,23 @@
 #Creating dungeon room type 
 import random
-import enemy_logic
+import enemy_logic as EnemyEncounter
 from player_logic import PlayerClass
+
 class DungeonRooms:
 
     #Naming the dungeon room type
     def __init__(self):
-        self._roomType = ["Trap-room","Arena-room","Merchant-room","Rest-room","Mini-boss"]
+        self._roomType = ["Trap-room","Arena-room","Merchant-room"]
         self._currentRooms = 0
         self._currentPlay = {"Trap-room"  : 0,
                              "Arena-room" : 0,
                              "Merchant-room" : 0,
-                             "Rest-room" : 0,
-                             "Mini-boss" : 0,
                              "Boss-room": 1}
         self._roomSequence = []
         self._currentRoomIndex = 0
 
-
+    def getCurrentRooms(self):
+        return self._currentRooms
 
     #Creating length of the dungeon 
     def select_length(self):
@@ -82,10 +82,57 @@ class MerchantRoom(DungeonRooms):
     def __init__(self):
         super().__init__()
 
+    #Merchant Merchandise
+    def merchantStock(self):
+        #Creating merchant items
+        merchantStock = ["Health-potion","Stamania-potion","Magic-potion"]
+
+        #Printing the available stock for the user
+        print("My current items in stock: ")
+        for items in merchantStock:
+            print(items, end=" ")
+        #Asking the user to purchase an item 
+        return f"Please select an potion from my shop!"
+
+#Creating arena room for the enemies to spawn and fight in
+class ArenaRoom(DungeonRooms):
+
+    def __init__(self):
+        super.__init__()
+
+    def battleArena(self):
+        #Creating a random amount of enemies to spawn into the battle
+        enemyAmount = random.randint(1,5)
+        enemyType = random.choice[EnemyEncounter.Bandit(),EnemyEncounter.Wolf]
+        totalEnemies = []
+        totalAmount = 0
+        
+        #Communicating to the player about the amount of combatents
+        print("You have entered an combat Arena, prepare to fight!!")
+        for enemy in enemyAmount:
+            totalEnemies.append(enemyType)
+        #Printing the list of enemies that have appeared
+        for enemy in totalEnemies:
+            print(f"A {enemy} has appeared!!!")
+            totalAmount += 1
+        
+        if totalAmount == 0:
+            return f"You hav cleared the room of enemies"
 
 
+#Creating boss encounter
+class BossRoom(DungeonRooms):
+    
+    def __init__(self):
+        super.__init__()
+    
+    def bossEncounter(self, boss):
+        f"You have encoutnered an {boss}"
+        presentEnemy = 1 
 
+        if presentEnemy == 0:
+            return f"You have defeated the {boss}!!"
 
-
+        
 
     

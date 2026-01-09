@@ -51,6 +51,18 @@ class PlayerInventory:
             return f"You used a health potion: {self.__player.playerHealth()}hp"
         return "No potions were found!"
 
+    def buyingItem(self):
+        potionList = ["health","stamania","magic"]
+        selectItem = input("Please select an potion(press E to exit): ").lower()
+
+        if selectItem in potionList:
+            self._playerInventory["potion"] = selectItem
+            self._playerInventory["gold"] -= 50
+            return f"You have purchased {self._playerInventory.get("potion")}\n"
+        elif selectItem == "e":
+            return f"You have left the shop!"
+        else:
+            print("Please select a proper item!")
 
 
 
