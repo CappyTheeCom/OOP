@@ -134,6 +134,7 @@ class PlayerClass(Player):
                     return f"Your {self.__class} attributes are: hp{self._hp:<15} sp{self._sp:<20} mp{self._mp:^10} "
           else:
                return "Input a proper class!!!"
+     
           
                    
 #Craeitng weapon template
@@ -141,7 +142,7 @@ class Weapon:
      #Using player as a way to pass the method through the class
      def __init__(self, player):
           self._player = player
-          self._weaponAtk = 0
+          self._weaponAtk = random.randint(0,9)
           self._lightWeapons = ["quarter-staff", "short-sword", "dagger", "long-sword", "mace", "buckle", "crossbow"]
           self._heavyWeapons = ["great-sword", "great-hammer", "great-mace", "bow", "club"]
           self._magicWeapons = ["tome", "spells", "staff", "runes"]
@@ -172,33 +173,28 @@ class Weapon:
      def weaponDmg(self, weapon):
           #Checking if the player profiecent in health
           if weapon in self._heavyWeapons:
-               for damage in range (self._player._hp, 130+5):
-                    self._weaponAtk += damage 
-                    #If the range is 0 (or some how less) it reduces attack damage
-                    if self._weaponAtk <= 0:
-                         self._weaponAtk -= 5
-                         return f"You are not profiecent to use a {weapon}: -5 Attack!!"
-               return f"Your {weapon} does {self._weaponAtk}!"
+               #Getting the strength modifier
+               strengthModify = self._player._weaponAttribute.get("strength")
+               self._weaponAtk = (strengthModify - 10) // 2
+               min_damage = 0 + self._weaponAtk
+               max_damage = 10 + self._weaponAtk               
+               return f"Your {weapon} does {min_damage}-{max_damage}!"
           
           #checking for stamania profieceny 
           elif weapon in self._lightWeapons:
-               for damage in range (self._player._sp, 130+5):
-                    self._atk += damage 
-                    #If the range is 0 (or some how less) it reduces attack damage
-                    if self._weaponAtk <= 0:
-                         self._weaponAtk -= 5
-                         return f"You are not profiecent to use a {weapon}: -5 Attack!!"
-               return f"Your {weapon} does {self._atk}!"
+               dexModify = self._player._weaponAttribute.get("Dexterity")
+               self._weaponAtk = (dexModify - 10) // 2
+               min_damage = 2 + self._weaponAtk
+               max_damage = 8 + self._weaponAtk  
+               return f"Your {weapon} does {min_damage}-{max_damage}!"
           
           #Checking if the player profiecent in magic damage 
           elif weapon in self._magicWeapons:
-               for damage in range (self._player._mp, 130+5):
-                    self._weaponAtk += damage 
-                    #If the range is 0 (or some how less) it reduces attack damage
-                    if self._atk <= 0:
-                         self._weaponAtk -= 5
-                         return f"You are not profiecent to use a {weapon}: -5 Attack!!"
-               return f"Your {weapon} does {self._weaponAtk}!"
+               intModify = self._player._weaponAttribute.get("Intelligence")
+               self._weaponAtk = (intModify - 10) // 2
+               min_damage = 2 + self._weaponAtk
+               max_damage = 8 + self._weaponAtk  
+               return f"Your {weapon} does {min_damage}-{max_damage}!"
           else:
                return f"There no weapon equipped!!!"
      
@@ -223,6 +219,7 @@ class LightWeapons(Weapon):
           #Checking if the weapon within the light weapon types
           if selectWeapon in LightWeapons.weaponTypes:
                LightWeapons.weaponTypes[selectWeapon] += 5
+               
                return f"{selectWeapon} current profieceny: {LightWeapons.weaponTypes[selectWeapon]}"
           else:
                return "Please select a proper weapon!!"

@@ -29,6 +29,10 @@ class playerTest(GameComponents):
 
     def playerWeaponAtkTest(self):
         self._currentWeapon.weaponDmg()
+
+        
+
+
         
 
 
