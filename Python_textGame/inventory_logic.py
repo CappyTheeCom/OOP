@@ -50,19 +50,30 @@ class PlayerInventory:
             self._playerInventory.get("potion") == "None"
             return f"You used a health potion: {self.__player.playerHealth()}hp"
         return "No potions were found!"
-
+    
+    #Creating a purchasing function for the merchants room works
     def buyingItem(self):
+        #An expandable list that can allow for the addition of more potions if desired
         potionList = ["health","stamania","magic"]
         selectItem = input("Please select an potion(press E to exit): ").lower()
 
+        #Checks if the potion is within the allocate list and removes the player gold 
         if selectItem in potionList:
-            self._playerInventory["potion"] = selectItem
-            self._playerInventory["gold"] -= 50
-            return f'You have purchased {self._playerInventory.get("potion")}\n'
+            if self._playerInventory.get("gold") >= 50:
+                self._playerInventory["potion"] = selectItem
+                self._playerInventory["gold"] -= 50
+                return f'You have purchased {self._playerInventory.get("potion")}\n'
+            else:
+                print("You do not have enough gold!!")
         elif selectItem == "e":
             return f"You have left the shop!"
         else:
-            print("Please select a proper item!")
+            print("Please select a proper option!")
+
+    #Creating a return value for the gold to be checked
+    def gettingGold(self):
+        return self._playerInventory.get("gold")
+
 
 
 

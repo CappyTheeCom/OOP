@@ -142,7 +142,7 @@ class Weapon:
      #Using player as a way to pass the method through the class
      def __init__(self, player):
           self._player = player
-          self._weaponAtk = random.randint(0,9)
+          self._weaponAtk = 0
           self._lightWeapons = ["quarter-staff", "short-sword", "dagger", "long-sword", "mace", "buckle", "crossbow"]
           self._heavyWeapons = ["great-sword", "great-hammer", "great-mace", "bow", "club"]
           self._magicWeapons = ["tome", "spells", "staff", "runes"]
@@ -199,7 +199,7 @@ class Weapon:
                return f"There no weapon equipped!!!"
      
      #Getting weapon stat 
-     def getWeapomAtk(self):
+     def getWeaponSAtk(self):
           return self._weaponAtk
 
 

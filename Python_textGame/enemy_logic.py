@@ -40,7 +40,7 @@ class Enemy:
      #Enemy gold drop chance
      def enemyGold(self):
           if self._enemyHp <= 0:
-               enemyDrop = random.randint(1,20)
+               enemyDrop = 50 # will change back into proper rng gold output
                print(f"Enemy dropped {enemyDrop} Gold!")
                return enemyDrop
 
