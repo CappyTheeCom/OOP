@@ -61,7 +61,7 @@ class TrapRoom(DungeonRooms):
     #Creating a chance to cycle through whether the player recieves a debuff or buff by entering the room
     def statusEffect(self):
         #Chccking if trap rooms are inside the list and will play a message if its in the current room!!
-        if "Trap-room" in self._currentPlay:
+        if self._roomSequence[self._currentRoomIndex] == "TrapRoom":
             print("You have entered a trapped room!\n " \
                   "Rolling saving dice to recieve a status effect!")
             
@@ -82,18 +82,18 @@ class MerchantRoom(DungeonRooms):
     
     def __init__(self):
         super().__init__()
+        self.__merchantStock = ["Health-potion","Stamania-potion","Magic-potion"]
 
     #Merchant Merchandise
-    def merchantStock(self):
-        #Creating merchant items
-        merchantStock = ["Health-potion","Stamania-potion","Magic-potion"]
-
+    def merchantStock(self, inventory):
         #Printing the available stock for the user
-        print("My current items in stock: ")
-        for items in merchantStock:
-            print(items, end=" ")
-        #Asking the user to purchase an item 
-        return f"Please select an potion from my shop!"
+        if self._roomSequence[self._currentRoomIndex] == "Merchant-room":
+            print("My current items in stock: ")
+            for items in self.__merchantStock:
+                print(items, end=" ")
+
+            inventory.buyingItem()
+            return "You are welcome for my service..."
 
 #Creating arena room for the enemies to spawn and fight in
 class ArenaRoom(DungeonRooms):

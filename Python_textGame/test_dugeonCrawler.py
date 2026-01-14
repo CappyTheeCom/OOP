@@ -3,6 +3,7 @@ import player_logic as Player
 import enemy_logic as Enemy 
 import inventory_logic as UserInventory 
 import room_logic as Dungeon
+import random
 import unittest
 
 #Creating user test cases
@@ -46,7 +47,38 @@ class inventoryTest(GameComponents):
         self.assertEqual(self._playerInventory.gettingGold(), 0)
 
 
+#Creating dungeon room testing 
+class DugeonRoomTest(GameComponents):
+
+    #Creating a test case for a short duration of the dungeon 
+    def settingDungeonLengthShort(self):
+        self._currentDungeon.select_length()
+
+        self.assertGreaterEqual(self._currentDungeon.getCurrentRooms(),5)
+        self.assertLessEqual(self._currentDungeon.getCurrentRooms(),7)
+    
+    def settingDungeonLengthLong(self):
+        #Creating a long varation to ensure proper usage 
+        self._currentDungeon.select_length()
+
+        self.assertGreaterEqual(self._currentDungeon.getCurrentRooms(),10)
+        self.assertLessEqual(self._currentDungeon.getCurrentRooms(),15)
+
+    #Creating test-case for trap room states
+    def trapRoomStates(self):
         
+
+    
+
+
+        
+
+
+
+
+
+
+
 
     
 
