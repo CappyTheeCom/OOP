@@ -66,6 +66,8 @@ class DugeonRoomTest(GameComponents):
 
     #Creating test-case for trap room states
     def trapRoomStates(self):
+        playerState = Dungeon.TrapRoom.statusEffect(0)
+
         
 
     

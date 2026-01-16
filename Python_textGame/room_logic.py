@@ -59,18 +59,22 @@ class TrapRoom(DungeonRooms):
         super().__init__()
 
     #Creating a chance to cycle through whether the player recieves a debuff or buff by entering the room
-    def statusEffect(self):
+    def statusEffect(self, playerSaveRoll=None):
         #Chccking if trap rooms are inside the list and will play a message if its in the current room!!
         if self._roomSequence[self._currentRoomIndex] == "TrapRoom":
             print("You have entered a trapped room!\n " \
                   "Rolling saving dice to recieve a status effect!")
             
             #Creating a save roll from the trap room
-            playerSaveRoll = random.randint(0, 20)
+            #Allowing for manuiplation for function test cases
+            if playerSaveRoll is None:
+                playerSaveRoll = random.randint(0, 20)
             
+            trapRoll = random.randint(0,20)
             #Creating a fail method for the trap-room (WIll update the win condition later!)
-            if playerSaveRoll < PlayerClass.getPlayerDp(): 
-                playerDamage = (PlayerClass.getPlayerDp - playerSaveRoll) *10
+            if playerSaveRoll < trapRoll :
+                trapDamageroll = random.randint(1,10) 
+                playerDamage = (PlayerClass.getPlayerDp() - trapDamageroll * 2)
                 PlayerClass.playerDamge(playerDamage)
                 return f"You have recieved {playerDamage} from failing the trap-room!!!"
             else:
