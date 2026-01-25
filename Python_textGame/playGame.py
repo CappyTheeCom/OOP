@@ -4,40 +4,64 @@ import enemy_logic as Enemy
 import inventory_logic as UserInventory 
 import room_logic as Dungeon
 
-def main():
-    while True:
-        #Creating player dungeon size and allocating player name, race and class
-        print("Welcome to the DungeonCrawl")
-        gameStart = Dungeon.DungeonRooms()
-        gameStart.select_length()
-        print(f"You have been given {gameStart.getCurrentRoomIndex()} rooms")
+class GameExe:
+     
+    def __init__(self):
+        #Enabling the main dungeon 
+        self.__dungeon = Dungeon.DungeonRooms()
+        #Allowing for the class to manipulate the class instance
+        self.__player = None 
+        self.__inventory = None 
 
-        #Creating player instance
+    def gameInitalisation(self):
+        print("Welcome to the DungeonCrawl")
+        print(f"You have been given {self.__dungeon.getCurrentRoomIndex()} rooms")
+        return
+
+
+    def playerCreation(self):
+        #Creating player instance and inventory 
         playerRace = input("Please select a race (\"Human\",\"Half-Elf\",\"Elf\",\"Orc\",\"Dwarf\"): ")
         playerName = input("Please enter your character name: ")
         playerAge = int(input("Enter your character age: "))
         playerClass = input("Pleas enter a class you would like to use (warrior, rogue, mage): ")
-        currentPlayer = Player.PlayerClass(playerName,playerRace,playerAge,playerClass)
+        self.__player = Player.PlayerClass(playerName,playerRace,playerAge,playerClass)
 
-        print(currentPlayer.playAbleRace())
-        print(currentPlayer.playerBonusStats())
-        print(currentPlayer.classAttributes())
+        #Displaying the player current player decisions and attributes
+        print(self.__player.playAbleRace())
+        print(self.__player.playerBonusStats())
+        print(self.__player.classAttributes())
+        return
+    
 
+    def playerWeaponSelection(self):
         #Choosing player weapon
-        playerWeapon = Player.Weapon(currentPlayer)
-        playerInventory = UserInventory.PlayerInventory(currentPlayer)
+        playerWeapon = Player.Weapon(self.__player)
+        self.__inventory = UserInventory.PlayerInventory(self.__player)
 
         playerWeapon.weaponStart()
         startingWeapon = input("Please select a weapon: ")
-        print(playerInventory.newWeapon(startingWeapon))
+        print(self.__inventory.newWeapon(startingWeapon))
         print(playerWeapon.weaponDmg(startingWeapon))
-
+        return
+    
+    def dungeonSequence(self):
         #Creating entrance to the dungeon 
         print("You have entered an ominous place")
-        print(gameStart.getPlayerStateRoom())
-        break
+        currentRoom = self.__dungeon.getPlayerStateRoom()
+        print(currentRoom)
+        
+        #Checking what room type is presesnt in the processs
+        if currentRoom == "Trap-room":
+            trapRoom = Dungeon.TrapRoom.statusEffect()
+            print(trapRoom)
+        elif currentRoom == "Merchant-Room":
+            merchantRoom = Dungeon.MerchantRoom.merchantStock(self.__player)
+            print(merchantRoom)
 
-main()
+
+
+
 
 
 
