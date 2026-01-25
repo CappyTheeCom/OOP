@@ -18,6 +18,7 @@ def main():
         playerAge = int(input("Enter your character age: "))
         playerClass = input("Pleas enter a class you would like to use (warrior, rogue, mage): ")
         currentPlayer = Player.PlayerClass(playerName,playerRace,playerAge,playerClass)
+
         print(currentPlayer.playAbleRace())
         print(currentPlayer.playerBonusStats())
         print(currentPlayer.classAttributes())
@@ -30,6 +31,8 @@ def main():
         startingWeapon = input("Please select a weapon: ")
         print(playerWeapon.weaponDmg(startingWeapon))
         print(playerInventory.newWeapon(startingWeapon))
+
+
         break
 
 main()

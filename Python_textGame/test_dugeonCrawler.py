@@ -64,9 +64,6 @@ class DugeonRoomTest(GameComponents):
         self.assertGreaterEqual(self._currentDungeon.getCurrentRooms(),10)
         self.assertLessEqual(self._currentDungeon.getCurrentRooms(),15)
 
-    #Creating test-case for trap room states
-    def trapRoomStates(self):
-        playerState = Dungeon.TrapRoom.statusEffect(0)
 
         
 

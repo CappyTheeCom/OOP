@@ -154,7 +154,7 @@ class Weapon:
           if self._player._hp >= 130:
                print("Heavy weapons available: ", end='')
                for weapons in self._heavyWeapons:
-                    print(weapons, end='') 
+                    print(weapons, end=' ') 
                return 
           #light weapon profieceny
           if self._player._sp >= 130:
@@ -174,7 +174,7 @@ class Weapon:
           #Checking if the player profiecent in health
           if weapon in self._heavyWeapons:
                #Getting the strength modifier
-               strengthModify = self._player._weaponAttribute.get("strength")
+               strengthModify = self._player._weaponAttributes.get("strength")
                self._weaponAtk = (strengthModify - 10) // 2
                min_damage = 0 + self._weaponAtk
                max_damage = 10 + self._weaponAtk               
@@ -182,7 +182,7 @@ class Weapon:
           
           #checking for stamania profieceny 
           elif weapon in self._lightWeapons:
-               dexModify = self._player._weaponAttribute.get("Dexterity")
+               dexModify = self._player._weaponAttributes.get("Dexterity")
                self._weaponAtk = (dexModify - 10) // 2
                min_damage = 2 + self._weaponAtk
                max_damage = 8 + self._weaponAtk  
@@ -190,7 +190,7 @@ class Weapon:
           
           #Checking if the player profiecent in magic damage 
           elif weapon in self._magicWeapons:
-               intModify = self._player._weaponAttribute.get("Intelligence")
+               intModify = self._player._weaponAttributes.get("Intelligence")
                self._weaponAtk = (intModify - 10) // 2
                min_damage = 2 + self._weaponAtk
                max_damage = 8 + self._weaponAtk  
