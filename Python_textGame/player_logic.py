@@ -174,7 +174,7 @@ class Weapon:
           #Checking if the player profiecent in health
           if weapon in self._heavyWeapons:
                #Getting the strength modifier
-               strengthModify = self._player._weaponAttributes.get("strength")
+               strengthModify = self._player._weaponAttributes.get("Strength")
                self._weaponAtk = (strengthModify - 10) // 2
                min_damage = 0 + self._weaponAtk
                max_damage = 10 + self._weaponAtk               

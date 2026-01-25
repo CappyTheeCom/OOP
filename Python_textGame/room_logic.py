@@ -41,8 +41,13 @@ class DungeonRooms:
         
         return self._roomSequence
     
-    def getCurrentRooms(self):
+    def getCurrentRoomIndex(self):
         return self._currentRooms
+    
+    def getPlayerStateRoom(self):
+        roomType = {self._roomSequence[self._currentRoomIndex]}
+        return f"You have entered {roomType}"
+
 
     #Creating player movement 
     def next_room(self):

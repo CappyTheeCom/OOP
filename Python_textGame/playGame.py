@@ -10,7 +10,7 @@ def main():
         print("Welcome to the DungeonCrawl")
         gameStart = Dungeon.DungeonRooms()
         gameStart.select_length()
-        print(f"You have been given {gameStart.getCurrentRooms()} rooms")
+        print(f"You have been given {gameStart.getCurrentRoomIndex()} rooms")
 
         #Creating player instance
         playerRace = input("Please select a race (\"Human\",\"Half-Elf\",\"Elf\",\"Orc\",\"Dwarf\"): ")
@@ -29,10 +29,12 @@ def main():
 
         playerWeapon.weaponStart()
         startingWeapon = input("Please select a weapon: ")
-        print(playerWeapon.weaponDmg(startingWeapon))
         print(playerInventory.newWeapon(startingWeapon))
+        print(playerWeapon.weaponDmg(startingWeapon))
 
-
+        #Creating entrance to the dungeon 
+        print("You have entered an ominous place")
+        print(gameStart.getPlayerStateRoom())
         break
 
 main()
