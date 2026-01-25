@@ -2,6 +2,7 @@
 import random
 import enemy_logic as EnemyEncounter
 from player_logic import PlayerClass
+import combat_logic as Combat
 
 class DungeonRooms:
 
@@ -126,6 +127,13 @@ class ArenaRoom(DungeonRooms):
             print(f"A {enemy} has appeared!!!")
             totalAmount += 1
         
+
+
+        #Creating the clear state of the room 
+        while totalAmount > 0:
+                       
+            
+            
         if totalAmount == 0:
             return f"You hav cleared the room of enemies"
 

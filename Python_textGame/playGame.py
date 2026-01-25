@@ -49,15 +49,23 @@ class GameExe:
         #Creating entrance to the dungeon 
         print("You have entered an ominous place")
         currentRoom = self.__dungeon.getPlayerStateRoom()
+        nextRoom = self.__dungeon.next_room()
         print(currentRoom)
         
         #Checking what room type is presesnt in the processs
         if currentRoom == "Trap-room":
             trapRoom = Dungeon.TrapRoom.statusEffect()
             print(trapRoom)
+            return nextRoom
         elif currentRoom == "Merchant-Room":
             merchantRoom = Dungeon.MerchantRoom.merchantStock(self.__player)
             print(merchantRoom)
+            return nextRoom
+        elif currentRoom == "Arena-Room":
+            arenaRoom = Dungeon.ArenaRoom.battleArena()
+            print(arenaRoom)
+            return nextRoom
+        
 
 
 
