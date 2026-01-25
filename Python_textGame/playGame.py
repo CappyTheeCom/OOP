@@ -34,7 +34,13 @@ def main():
 
         #Creating entrance to the dungeon 
         print("You have entered an ominous place")
-        print(gameStart.getPlayerStateRoom())
+        currentRoom = gameStart.getPlayerStateRoom()
+        print(currentRoom)
+        
+        #Creating main gameplay loop
+        if currentRoom == "Arena room":
+            Dungeon.ArenaRoom.battleArena()
+        elif currentPlayer == "Trap"
         break
 
 main()
