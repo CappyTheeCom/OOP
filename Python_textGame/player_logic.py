@@ -1,5 +1,3 @@
-import random
-
 #Creating a player based class
 class Player: 
     def __init__(self,name,race,age):
@@ -199,7 +197,7 @@ class Weapon:
                return f"There no weapon equipped!!!"
      
      #Getting weapon stat 
-     def getWeaponSAtk(self):
+     def getWeaponAtk(self):
           return self._weaponAtk
 
 

@@ -110,32 +110,46 @@ class ArenaRoom(DungeonRooms):
 
     def __init__(self):
         super.__init__()
+        self.__totalEnemies = []
+        self.__remainingEnemies = 0
 
     def battleArena(self):
         #Creating a random amount of enemies to spawn into the battle
         enemyAmount = random.randint(1,5)
-        enemyType = random.choice[EnemyEncounter.Bandit(),EnemyEncounter.Wolf]
-        totalEnemies = []
-        totalAmount = 0
+        enemyType = random.choice[EnemyEncounter.Bandit(),EnemyEncounter.Wolf()]
         
         #Communicating to the player about the amount of combatents
         print("You have entered an Arena, prepare to fight!!")
         for enemy in enemyAmount:
-            totalEnemies.append(enemyType)
+            self.__totalEnemies.append(enemyType)
         #Printing the list of enemies that have appeared
-        for enemy in totalEnemies:
+        for enemy in self.__totalEnemies:
             print(f"A {enemy} has appeared!!!")
-            totalAmount += 1
+            self.__remainingEnemies += 1
         
-
-
-        #Creating the clear state of the room 
-        while totalAmount > 0:
-                       
+        #Creating the clear state of the room             
+        if self.__remainingEnemies == 0:
+            return f"You have cleared the room of enemies"
+        
+    def enemyDeathRemoval(self,playerHit):
+        totalEnemies = self.__totalEnemies
+        
+        #Looping through the list of enemies and hitting all enemies from the different attack roles
+        #Creating an copied list from the original list, allowing for the removal of enemies without accidently skipping [:]
+        for death in totalEnemies[:]:
+            enemiesHealth = death.hitEnemy(playerHit)
             
-            
-        if totalAmount == 0:
-            return f"You hav cleared the room of enemies"
+            if enemiesHealth <= 0:
+                self.__remainingEnemies -= 1
+                self.__totalEnemies.remove(death)
+
+        #If there is no enemies left then the room has been cleared
+        if self.__remainingEnemies <= 0:
+            return "The room has been cleared"
+        
+    #Returning the enemys from the arena 
+    def enemiesInArena(self):
+        return self.__totalEnemies
 
 
 #Creating boss encounter

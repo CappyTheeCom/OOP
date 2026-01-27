@@ -1,5 +1,4 @@
 import random
-from player_logic import Weapon
 
 #Making enemy template
 class Enemy:
@@ -43,8 +42,18 @@ class Enemy:
                enemyDrop = 50 # will change back into proper rng gold output
                print(f"Enemy dropped {enemyDrop} Gold!")
                return enemyDrop
-
-
+          
+     #Getting enemy stats
+     def hitEnemy(self, hit):
+          enemyHealth = self._enemyHp - hit 
+          return enemyHealth
+     
+     def getEnemyDF(self):
+          return self._enemyDp
+     
+     def getEnemyAtk(self):
+          return self._atk
+     
 #Creating bandit enemy type               
 class Bandit(Enemy):
 

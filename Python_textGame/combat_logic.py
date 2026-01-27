@@ -1,17 +1,17 @@
 #Creating player combat
-import player_logic as Player 
-import enemy_logic as Enemy
 import random
+from room_logic import ArenaRoom
 
 class Combat:
     
-    def __init__(self, player, enemy,weapon):
+    def __init__(self, player, enemy, weapon):
         self._player = player 
         self._playerWeapon = weapon
         self._enemy = enemy
+        self._turn = []
 
     #Creating character hit chance
-    def playerDefense(self):
+    def playerHitChance(self):
           enemyDmgRoll = random.randint(0,self._enemy._atk)
           
           #If enemy damage is less than the armor class
@@ -28,14 +28,18 @@ class Combat:
           else:
                return f"An error has occurred!!"
     
-    #Creating enemy defensive points
-    def enemyDF(self):
-          playerDmgRoll = random.randint(0)
+    #Creating enemy defensive points and hit-chance
+    def enemyHitChance(self):
+          playerDmgRoll = random.randint(0, 20)
+          enemyDefense = self._enemy.getEnemyDp
 
-          if playerDmgRoll <= self._enemy._enemyDp:
+          if playerDmgRoll <= enemyDefense:
                playerDmg = 0 
                return f"Player did {playerDmg}dmg to enemy!!!"
-          elif playerDmgRoll > self._enemy._enemyDp:
-               playerDmg = random.randint(0, self._playerWeapon._weaponAtk ) - self._enemy._enemyDp
+          elif playerDmgRoll > enemyDefense:
+               playerDmg = random.randint(0, self._playerWeapon._weaponAtk ) - enemyDefense
+               self._enemy.hitEnemy(playerDmg)
                return f"Player did {playerDmg}dmg to enemy!!!"
-          
+
+         
+         
