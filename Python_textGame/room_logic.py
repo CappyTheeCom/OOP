@@ -126,26 +126,7 @@ class ArenaRoom(DungeonRooms):
         for enemy in self.__totalEnemies:
             print(f"A {enemy} has appeared!!!")
             self.__remainingEnemies += 1
-        
-        #Creating the clear state of the room             
-        if self.__remainingEnemies == 0:
-            return f"You have cleared the room of enemies"
-        
-    def enemyDeathRemoval(self,playerHit):
-        totalEnemies = self.__totalEnemies
-        
-        #Looping through the list of enemies and hitting all enemies from the different attack roles
-        #Creating an copied list from the original list, allowing for the removal of enemies without accidently skipping [:]
-        for death in totalEnemies[:]:
-            enemiesHealth = death.hitEnemy(playerHit)
-            
-            if enemiesHealth <= 0:
-                self.__remainingEnemies -= 1
-                self.__totalEnemies.remove(death)
 
-        #If there is no enemies left then the room has been cleared
-        if self.__remainingEnemies <= 0:
-            return "The room has been cleared"
         
     #Returning the enemys from the arena 
     def enemiesInArena(self):

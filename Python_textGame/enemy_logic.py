@@ -47,6 +47,9 @@ class Enemy:
      def hitEnemy(self, hit):
           enemyHealth = self._enemyHp - hit 
           return enemyHealth
+
+     def getEnemyHp(self):
+          return self._enemyHp
      
      def getEnemyDF(self):
           return self._enemyDp

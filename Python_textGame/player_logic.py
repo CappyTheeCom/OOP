@@ -168,7 +168,7 @@ class Weapon:
                return 
           
      #Creating weapon attack damage 
-     def weaponDmg(self, weapon):
+     def weaponDmgCheck(self, weapon):
           #Checking if the player profiecent in health
           if weapon in self._heavyWeapons:
                #Getting the strength modifier
