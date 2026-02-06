@@ -8,7 +8,6 @@ class Combat:
         self._player = player 
         self._playerWeapon = weapon
         self._enemy = enemy
-        self._turn = []
         self._arena = ArenaRoom()
 
     #Creating character hit chance
@@ -23,7 +22,7 @@ class Combat:
                #Enemy damage
                enemyDmg = random.randint(0, enemyAtk - self._player._dp)
                
-               self._hp -= enemyDmg
+               self._player._hp -= enemyDmg
                return f"The enemy has landed a hit. You take {enemyDmg} damage!!"
           #If something else happens that is not met by the conditions
           else:
@@ -58,12 +57,12 @@ class Combat:
               for turns in currentTurns:
                  if turns is self._player:
                    #Enemy recieves damage from the player weapon atk chance
-                   #Creating live enemies list
-                   live_enemies = [enemy for enemy in currentTotalEnemies if enemy.getEnemyHp > 0]
+                   #Creating live enemies list, using the enemy object instance and checking if its greater than 0
+                   live_enemies = [enemy for enemy in currentTotalEnemies if enemy.getEnemyHp() > 0]
                    
                    if live_enemies:
                        target = random.choice(live_enemies)
-                       target.hitEnemy(weaponHit.getWeaponAtk())
+                       target.self.enemyHitChance(weaponHit.getAtk())
 
                  else:
                    #Player recieves damage
@@ -74,6 +73,27 @@ class Combat:
              
          self._arena.next_room()
          return "You beat the the remaining enemies"
+    
+#Creating boss orienated combat until the enemy dies from hit chance
+class BossCombat(Combat):
+    
+    def __init__(self, player, weapon, enemy):
+        super().__init__(player, weapon, enemy)
+
+    def bossTurnCombat(self):
+        currentTurns = [self._player, self._enemy]
+        weaponHitChance = self._playerWeapon
+
+        while self._enemy.getEnemyHp > 0:
+            for turns in currentTurns:
+                if turns is self._player:
+                    self.enemyHitChance(weaponHitChance)
+                else:
+                    self.playerHitChance(self._enemy.enemyAtk)
+          
+                    
+    
+
               
                   
 
