@@ -65,8 +65,13 @@ class GameExe:
             arenaRoom = Dungeon.ArenaRoom.battleArena()
             print(arenaRoom)
             return nextRoom
+        #Will add additional bosses later into an randomly assorted list to select from
+        elif currentRoom == "Boss-Room":
+            orge = Enemy.Ogre()
+            bossRoom = Dungeon.BossRoom.bossEncounter(orge.enemyName())
+            return bossRoom
         
-
+    
         
 
 

@@ -103,4 +103,7 @@ class Ogre(Enemy):
                return stun
           else:
                return f"You have taken {attack}dmg"
+     
+     def enemyName(self):
+          return self._name
 

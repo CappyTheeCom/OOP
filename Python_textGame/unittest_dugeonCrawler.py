@@ -3,7 +3,6 @@ import player_logic as Player
 import enemy_logic as Enemy 
 import inventory_logic as UserInventory 
 import room_logic as Dungeon
-import random
 import unittest
 
 #Creating user test cases
@@ -65,7 +64,8 @@ class DugeonRoomTest(GameComponents):
         self.assertLessEqual(self._currentDungeon.getCurrentRooms(),15)
 
 
-        
+if __name__ == "__main__":
+    unittest.main()
 
     
 
