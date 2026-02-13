@@ -1,6 +1,5 @@
 #Creating player combat
 import random
-from room_logic import ArenaRoom
 
 class Combat:
     

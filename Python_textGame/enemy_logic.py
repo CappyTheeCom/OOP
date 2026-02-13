@@ -59,7 +59,7 @@ class Bandit(Enemy):
 
      #Creating name
      def __init__(self, name=None):
-          super.__init__(name)
+          super().__init__(name)
           if self._name == None:
                name = "Bandit"
      
@@ -74,7 +74,7 @@ class Wolf(Enemy):
 
      #Creating name
      def __init__(self, name=None):
-          super.__init__(name)
+          super().__init__(name)
           if self._name == None:
                name = "Wolf"
      
@@ -88,7 +88,7 @@ class Ogre(Enemy):
      
      #Changing stats to make it a more dealy encounter 
      def __init__(self, name=None):
-          super.__init__(name)
+          super().__init__(name)
           if self._name == None:
                name = "Orge"
           
