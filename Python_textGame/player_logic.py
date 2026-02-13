@@ -1,3 +1,4 @@
+import random
 #Creating a player based class
 class Player: 
     def __init__(self,name,race,age):
@@ -63,6 +64,7 @@ class Player:
               self._sp += 10 
               return f"Your race bonus is +10 across all stats!"
     
+
     #Creating player name
     def selectPlayerName(self):
         if len(self.__name) <= 4:
@@ -71,11 +73,6 @@ class Player:
              return "Your name must not have any characters!!!"
         else:
              return f"Your name is {self.__name}"
-        
-    #Creating player damage
-    def playerDamge(self,damage):
-         currentPlayerHp = self._hp - damage 
-         return currentPlayerHp
     
     def playerHeal(self, potion):
          currentPlayerHp = self._hp + potion
@@ -132,8 +129,31 @@ class PlayerClass(Player):
                     return f"Your {self.__class} attributes are: hp{self._hp:<15} sp{self._sp:<20} mp{self._mp:^10} "
           else:
                return "Input a proper class!!!"
-     
           
+     def playerDeathState(self):
+         rollChance =  random.randint(0,20)
+         saveRolls = 0 
+         deathRolls = 0 
+
+         if self._hp < 0: 
+              print(f"{self.__name} has entered a dying state!!!")
+          
+         while True:
+               #Creating save and death rolls
+               if (rollChance) + (self._dp - 10 / 2)  >= 10:
+                    saveRolls += 1 
+                    print(f"You have {saveRolls}/3 left to revive")
+               else:
+                    deathRolls += 1 
+                    print(f"You have {deathRolls}/3 left before death")
+
+               if saveRolls == 3:
+                    self._hp = 20 + self._dp
+                    return f"{self.__name} have succeeded the save rolls HP: {self._hp}"
+               
+               elif deathRolls == 3:
+                    return f"{self.__name} has died, game over!!"
+
                    
 #Craeitng weapon template
 class Weapon:
@@ -168,7 +188,7 @@ class Weapon:
                return 
           
      #Creating weapon attack damage 
-     def weaponDmg(self, weapon):
+     def weaponDmgCheck(self, weapon):
           #Checking if the player profiecent in health
           if weapon in self._heavyWeapons:
                #Getting the strength modifier

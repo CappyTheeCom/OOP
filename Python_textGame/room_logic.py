@@ -141,9 +141,6 @@ class ArenaRoom(DungeonRooms):
                 self.__remainingEnemies -= 1
                 self.__totalEnemies.remove(death)
 
-        #If there is no enemies left then the room has been cleared
-        if self.__remainingEnemies <= 0:
-            return "The room has been cleared"
         
     #Returning the enemys from the arena 
     def enemiesInArena(self):
@@ -158,11 +155,7 @@ class BossRoom(DungeonRooms):
     
     #Creating a simple boss room for the enemy
     def bossEncounter(self, boss):
-        print(f"You have encoutnered an {boss}")
-        presentEnemy = 1 
-
-        if presentEnemy == 0:
-            return f"You have defeated the {boss}!!"
+        return f"You have encoutnered an {boss}"
 
         
 
