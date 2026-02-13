@@ -18,6 +18,7 @@ class GameExe:
 
     def gameInitalisation(self):
         print("Welcome to the DungeonCrawl")
+        self.__dungeon.select_length()
         print(f"You have been given {self.__dungeon.getCurrentRoomIndex()} rooms")
         return
 
@@ -52,22 +53,20 @@ class GameExe:
         #Creating entrance to the dungeon 
         print("You have entered an ominous place")
         currentRoom = self.__dungeon.getPlayerStateRoom()
-        nextRoom = self.__dungeon.next_room()
-        print(currentRoom)
+        print(f"You have entered {currentRoom}")
         
         #Checking what room type is presesnt in the processs
-        if currentRoom == "Trap-room":
-            trapRoom = Dungeon.TrapRoom.statusEffect()
-            print(trapRoom)
-            return nextRoom
-        elif currentRoom == "Merchant-Room":
-            merchantRoom = Dungeon.MerchantRoom.merchantStock(self.__player)
-            print(merchantRoom)
-            return nextRoom
-        elif currentRoom == "Arena-Room":
+        if "Trap-room" in currentRoom:
+            trapRoom = Dungeon.TrapRoom()
+            print(trapRoom.statusEffect())
+        elif "Merchant-room" in currentRoom:
+            merchantRoom = Dungeon.MerchantRoom()
+            print(merchantRoom.merchantStock(self.__player))
+        elif "Arena-room" in currentRoom:
             self.__arena = Dungeon.ArenaRoom()
             print(self.__arena.battleArena())
-            return nextRoom
+
+        return currentRoom
 
 
     #Creating a combat action sequence    
@@ -83,11 +82,56 @@ class GameExe:
         #Menu selection
         if playerChoice == 1:
             commenceCombat = Combat.Combat(self.__player, self.__arena.enemiesInArena(), self.__playerWeapon)
+            commenceCombat.enemyHitChance()
+            commenceCombat.playerHitChance()
             return commenceCombat
         elif playerChoice == 2:
             return self.__inventory.usingPotion()
         else:
             return "There is no retreat :)"
+        
+    
+    #Creaitng merchant options and purchasing
+    def merchantPurchasing(self):
+        print("You have entered a quesitonable mans lair\n"\
+              "1. health potion\n" \
+              "2. Stamania Potion\n"\
+              "3. magic potion")
+
+        self.__inventory.buyingItem()
+        return "You give your thanks"
+    
+
+def main():
+
+    #Setting up games dungeons
+    gameInit = GameExe()
+    gameInit.gameInitalisation()
+
+    #Creating player initalisation 
+    gameInit.playerCreation()
+    gameInit.playerWeaponSelection()
+
+    currentRoom = gameInit.dungeonSequence()
+
+    if "Arena-room" in currentRoom: 
+        gameInit.combatSequence()
+    elif "Merchant-room" in currentRoom:
+        gameInit.merchantPurchasing()
+
+main()
+
+
+        
+
+
+
+
+
+
+
+
+
 
         
 

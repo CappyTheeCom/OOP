@@ -46,8 +46,8 @@ class DungeonRooms:
         return self._currentRooms
     
     def getPlayerStateRoom(self):
-        roomType = {self._roomSequence[self._currentRoomIndex]}
-        return f"You have entered {roomType}"
+        roomType = self._roomSequence[self._currentRoomIndex - 1]
+        return roomType
 
 
     #Creating player movement 
@@ -67,6 +67,7 @@ class TrapRoom(DungeonRooms):
     #Creating a chance to cycle through whether the player recieves a debuff or buff by entering the room
     def statusEffect(self, playerSaveRoll=None):
         #Chccking if trap rooms are inside the list and will play a message if its in the current room!!
+     if self._currentRoomIndex < len(self._roomSequence):
         if self._roomSequence[self._currentRoomIndex] == "Trap-Room":
             print("You have entered a trapped room!\n " \
                   "Rolling saving dice to recieve a status effect!")
@@ -97,6 +98,7 @@ class MerchantRoom(DungeonRooms):
     #Merchant Merchandise
     def merchantStock(self, playerInventory):
         #Printing the available stock for the user
+     if self._currentRoomIndex < len(self._roomSequence):
         if self._roomSequence[self._currentRoomIndex] == "Merchant-Room":
             print("My current items in stock: ")
             for items in self.__merchantStock:
@@ -109,14 +111,14 @@ class MerchantRoom(DungeonRooms):
 class ArenaRoom(DungeonRooms):
 
     def __init__(self):
-        super.__init__()
+        super().__init__()
         self.__totalEnemies = []
         self.__remainingEnemies = 0
 
     def battleArena(self):
         #Creating a random amount of enemies to spawn into the battle
         enemyAmount = random.randint(1,5)
-        enemyType = random.choice[EnemyEncounter.Bandit(),EnemyEncounter.Wolf()]
+        enemyType = random.choice([EnemyEncounter.Bandit(),EnemyEncounter.Wolf()])
         
         #Communicating to the player about the amount of combatents
         print("You have entered an Arena, prepare to fight!!")
@@ -151,7 +153,7 @@ class ArenaRoom(DungeonRooms):
 class BossRoom(DungeonRooms):
     
     def __init__(self):
-        super.__init__()
+        super().__init__()
     
     #Creating a simple boss room for the enemy
     def bossEncounter(self, boss):
