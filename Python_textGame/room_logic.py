@@ -127,9 +127,7 @@ class ArenaRoom(DungeonRooms):
             print(f"A {enemy} has appeared!!!")
             self.__remainingEnemies += 1
         
-        #Creating the clear state of the room             
-        if self.__remainingEnemies == 0:
-            return f"You have cleared the room of enemies"
+        return "Combat commences"
         
     def enemyDeathRemoval(self,playerHit):
         totalEnemies = self.__totalEnemies

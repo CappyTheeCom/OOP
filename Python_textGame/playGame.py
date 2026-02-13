@@ -3,6 +3,7 @@ import player_logic as Player
 import enemy_logic as Enemy 
 import inventory_logic as UserInventory 
 import room_logic as Dungeon
+import combat_logic as Combat
 
 class GameExe:
      
@@ -12,6 +13,8 @@ class GameExe:
         #Allowing for the class to manipulate the class instance
         self.__player = None 
         self.__inventory = None 
+        self.__arena = None
+        self.__playerWeapon = None
 
     def gameInitalisation(self):
         print("Welcome to the DungeonCrawl")
@@ -36,13 +39,13 @@ class GameExe:
 
     def playerWeaponSelection(self):
         #Choosing player weapon
-        playerWeapon = Player.Weapon(self.__player)
+        self.__playerWeapon = Player.Weapon(self.__player)
         self.__inventory = UserInventory.PlayerInventory(self.__player)
 
-        playerWeapon.weaponStart()
+        self.__playerWeapon.weaponStart()
         startingWeapon = input("Please select a weapon: ")
         print(self.__inventory.newWeapon(startingWeapon))
-        print(playerWeapon.weaponDmg(startingWeapon))
+        print(self.__playerWeapon.weaponDmg(startingWeapon))
         return
     
     def dungeonSequence(self):
@@ -62,10 +65,36 @@ class GameExe:
             print(merchantRoom)
             return nextRoom
         elif currentRoom == "Arena-Room":
-            arenaRoom = Dungeon.ArenaRoom.battleArena()
-            print(arenaRoom)
+            self.__arena = Dungeon.ArenaRoom()
+            print(self.__arena.battleArena())
             return nextRoom
+
+
+    #Creating a combat action sequence    
+    def combatSequence(self):
+        #Creating player input for what they want to do!
+        print("1. Attack\n" \
+              "2. Potion\n" \
+              "3. Retreat" \
+              )
         
+        playerChoice = input(int("Please select an option!: "))
+
+        #Menu selection
+        if playerChoice == 1:
+            commenceCombat = Combat.Combat(self.__player, self.__arena.enemiesInArena(), self.__playerWeapon)
+            return commenceCombat
+        elif playerChoice == 2:
+            return self.__inventory.usingPotion()
+        else:
+            return "There is no retreat :)"
+
+        
+
+
+           
+
+            
 
         
 
