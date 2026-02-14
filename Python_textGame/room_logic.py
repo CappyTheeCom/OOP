@@ -42,76 +42,89 @@ class DungeonRooms:
         
         return self._roomSequence
     
-    def getCurrentRoomIndex(self):
+    #Creating getter methods for protected instances
+    def getDungeonIndex(self):
+        return self._currentRoomIndex
+    
+    def getCurrentRoom(self):
         return self._currentRooms
     
     def getPlayerStateRoom(self):
-        roomType = self._roomSequence[self._currentRoomIndex - 1]
+        roomType = self._roomSequence[self._currentRooms - 1]
         return roomType
 
-
+    def getDungeonRoomSequence(self):
+        roomSequence = self._roomSequence
+        return roomSequence
+    
     #Creating player movement 
     def next_room(self):
         if self._currentRoomIndex < self._currentRooms - 1:
-            self._currentRooms += 1   
+            self._currentRoomIndex += 1   
             return f"You have moved into the {self._currentRoomIndex} room!!"
         else:
             return f"You have reached the end!!"                    
 
 #Creating room types 
-class TrapRoom(DungeonRooms):
+class TrapRoom:
     
-    def __init__(self):
-        super().__init__()
+    def __init__(self, dungeon, player):
+        self.__dungeon = dungeon
+        self.__player = player
+        
 
     #Creating a chance to cycle through whether the player recieves a debuff or buff by entering the room
-    def statusEffect(self, playerSaveRoll=None):
+    def statusEffect(self):
+        currentRoomIndex = self.__dungeon.getDungeonIndex()
+        dungeonSequence = self.__dungeon.getDungeonRoomSequence()
+        player = self.__player
+
         #Chccking if trap rooms are inside the list and will play a message if its in the current room!!
-     if self._currentRoomIndex < len(self._roomSequence):
-        if self._roomSequence[self._currentRoomIndex] == "Trap-Room":
-            print("You have entered a trapped room!\n " \
-                  "Rolling saving dice to recieve a status effect!")
-            
-            #Creating a save roll from the trap room
-            #Allowing for manuiplation for function test cases
-            if playerSaveRoll is None:
-                playerSaveRoll = random.randint(0, 20)
-            
-            trapRoll = random.randint(0,20)
-            #Creating a fail method for the trap-room (WIll update the win condition later!)
-            if playerSaveRoll < trapRoll :
-                trapDamageroll = random.randint(1,10) 
-                playerDamage = (PlayerClass.getPlayerDp() - trapDamageroll * 2)
-                PlayerClass.playerDamge(playerDamage)
-                return f"You have recieved {playerDamage} from failing the trap-room!!!"
-            else:
-                return f"You have escaped the trap-room!!"
+        if currentRoomIndex < len(dungeonSequence):
+                print("You have entered a trapped room!\n " \
+                    "Rolling saving dice to recieve a status effect!")
+                
+                #Creating a save roll from the trap room
+                playerSaveRoll = random.randint(0,29)
+                
+                trapRoll = random.randint(0,20)
+                #Creating a fail method for the trap-room (WIll update the win condition later!)
+                if playerSaveRoll < trapRoll :
+                    trapDamageroll = random.randint(1,10) 
+                    playerDamage = (player.getPlayerDp()- trapDamageroll * 2)
+                    player.playerDamge(playerDamage)
+                    return f"You have recieved {playerDamage} from failing the trap-room!!!"
+                else:
+                    return f"You have escaped the trap-room!!"
     
 
 #Creating merchant room and purchasing items
-class MerchantRoom(DungeonRooms):
+class MerchantRoom:
     
-    def __init__(self):
-        super().__init__()
+    def __init__(self, dungeon, player):
+        self.__dungeon = dungeon
+        self.__player = player
         self.__merchantStock = ["Health-potion","Stamania-potion","Magic-potion"]
 
     #Merchant Merchandise
-    def merchantStock(self, playerInventory):
+    def merchantStock(self):
+     dungeonIndex = self.__dungeon.getCurrentRoom()
+     dungeonCurrentRoom = self.__dungeon.getDungeonIndex()
+     dungeonSequence = self.__dungeon.getDungeonRoomSequence()
+     
         #Printing the available stock for the user
-     if self._currentRoomIndex < len(self._roomSequence):
-        if self._roomSequence[self._currentRoomIndex] == "Merchant-Room":
+     if dungeonIndex < len(dungeonSequence):
             print("My current items in stock: ")
             for items in self.__merchantStock:
                 print(items, end=" ")
 
-            playerInventory.buyingItem()
+            self.__player.buyingItem()
             return "You are welcome for my service..."
 
 #Creating arena room for the enemies to spawn and fight in
-class ArenaRoom(DungeonRooms):
+class ArenaRoom:
 
     def __init__(self):
-        super().__init__()
         self.__totalEnemies = []
         self.__remainingEnemies = 0
 
@@ -122,7 +135,7 @@ class ArenaRoom(DungeonRooms):
         
         #Communicating to the player about the amount of combatents
         print("You have entered an Arena, prepare to fight!!")
-        for enemy in enemyAmount:
+        for enemy in range (0,enemyAmount):
             self.__totalEnemies.append(enemyType)
         #Printing the list of enemies that have appeared
         for enemy in self.__totalEnemies:

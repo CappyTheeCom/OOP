@@ -12,14 +12,13 @@ class GameExe:
         self.__dungeon = Dungeon.DungeonRooms()
         #Allowing for the class to manipulate the class instance
         self.__player = None 
-        self.__inventory = None 
-        self.__arena = None
+        self.__inventory = None
         self.__playerWeapon = None
 
     def gameInitalisation(self):
         print("Welcome to the DungeonCrawl")
         self.__dungeon.select_length()
-        print(f"You have been given {self.__dungeon.getCurrentRoomIndex()} rooms")
+        print(f"You have been given {self.__dungeon.getCurrentRoom()} rooms")
         return
 
 
@@ -51,20 +50,19 @@ class GameExe:
     
     def dungeonSequence(self):
         #Creating entrance to the dungeon 
-        print("You have entered an ominous place")
         currentRoom = self.__dungeon.getPlayerStateRoom()
-        print(f"You have entered {currentRoom}")
+        print(f"You have entered the {currentRoom}")
         
         #Checking what room type is presesnt in the processs
         if "Trap-room" in currentRoom:
-            trapRoom = Dungeon.TrapRoom()
+            trapRoom = Dungeon.TrapRoom(self.__dungeon,self.__player)
             print(trapRoom.statusEffect())
         elif "Merchant-room" in currentRoom:
-            merchantRoom = Dungeon.MerchantRoom()
-            print(merchantRoom.merchantStock(self.__player))
+            merhantRoom = Dungeon.MerchantRoom(self.__dungeon, self.__player)
+            print(merhantRoom.merchantStock())
         elif "Arena-room" in currentRoom:
-            self.__arena = Dungeon.ArenaRoom()
-            print(self.__arena.battleArena())
+            self._arenaRoom = Dungeon.ArenaRoom()
+            print(self._arenaRoom.battleArena())
 
         return currentRoom
 
@@ -77,11 +75,11 @@ class GameExe:
               "3. Retreat" \
               )
         
-        playerChoice = input(int("Please select an option!: "))
+        playerChoice = int(input("Please select an option!: "))
 
         #Menu selection
         if playerChoice == 1:
-            commenceCombat = Combat.Combat(self.__player, self.__arena.enemiesInArena(), self.__playerWeapon)
+            commenceCombat = Combat.Combat(self.__player, self._arenaRoom.enemiesInArena(), self.__playerWeapon)
             commenceCombat.enemyHitChance()
             commenceCombat.playerHitChance()
             return commenceCombat
@@ -90,17 +88,6 @@ class GameExe:
         else:
             return "There is no retreat :)"
         
-    
-    #Creaitng merchant options and purchasing
-    def merchantPurchasing(self):
-        print("You have entered a quesitonable mans lair\n"\
-              "1. health potion\n" \
-              "2. Stamania Potion\n"\
-              "3. magic potion")
-
-        self.__inventory.buyingItem()
-        return "You give your thanks"
-    
 
 def main():
 
@@ -115,9 +102,7 @@ def main():
     currentRoom = gameInit.dungeonSequence()
 
     if "Arena-room" in currentRoom: 
-        gameInit.combatSequence()
-    elif "Merchant-room" in currentRoom:
-        gameInit.merchantPurchasing()
+        print(gameInit.combatSequence())
 
 main()
 
