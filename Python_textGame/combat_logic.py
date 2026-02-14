@@ -6,12 +6,13 @@ class Combat:
     def __init__(self, player, enemy, weapon):
         self._player = player 
         self._playerWeapon = weapon
-        self._enemy = enemy
+        self._enemyList = enemy
         self._turn = []
 
     #Creating character hit chance
     def playerHitChance(self):
-          enemyDmgRoll = random.randint(0,self._enemy._atk)
+     for enemy in self._enemyList:
+          enemyDmgRoll = random.randint(0, enemy._atk)
           
           #If enemy damage is less than the armor class
           if enemyDmgRoll <= self._player._dp:
@@ -19,7 +20,7 @@ class Combat:
           #If enemy damage is greater than the armor class
           elif enemyDmgRoll > self._player._dp:
                #Enemy damage
-               enemyDmg = random.randint(0, self._enemy._atk - self._player._dp)
+               enemyDmg = random.randint(0, enemy._atk - self._player._dp)
                
                self._hp -= enemyDmg
                return f"The enemy has landed a hit. You take {enemyDmg} damage!!"
