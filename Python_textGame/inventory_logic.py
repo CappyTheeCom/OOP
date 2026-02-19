@@ -55,7 +55,7 @@ class PlayerInventory:
     def buyingItem(self):
         #An expandable list that can allow for the addition of more potions if desired
         potionList = ["health","stamania","magic"]
-        selectItem = input("Please select an potion(press E to exit): ").lower()
+        selectItem = input("\nPlease select an potion(press E to exit): ").lower()
 
         #Checks if the potion is within the allocate list and removes the player gold 
         if selectItem in potionList:

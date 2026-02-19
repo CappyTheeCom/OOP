@@ -33,6 +33,8 @@ class DungeonRooms:
             self._currentRooms += random.randint(7,10)
         elif user_length ==  "long":
             self._currentRooms += random.randint(10,15)
+        else:
+            return "Please select a proper state!"
         
         for i in range(self._currentRooms):
             room = random.choice(self._roomType)
@@ -108,18 +110,13 @@ class MerchantRoom:
 
     #Merchant Merchandise
     def merchantStock(self):
-     dungeonIndex = self.__dungeon.getCurrentRoom()
-     dungeonCurrentRoom = self.__dungeon.getDungeonIndex()
-     dungeonSequence = self.__dungeon.getDungeonRoomSequence()
-     
-        #Printing the available stock for the user
-     if dungeonIndex < len(dungeonSequence):
-            print("My current items in stock: ")
-            for items in self.__merchantStock:
-                print(items, end=" ")
+     #Printing the available stock for the user
+     print("My current items in stock: ")
+     for items in self.__merchantStock:
+        print(items, end=" ")
 
-            self.__player.buyingItem()
-            return "You are welcome for my service..."
+     self.__player.buyingItem()
+     return "You are welcome for my service..."
 
 #Creating arena room for the enemies to spawn and fight in
 class ArenaRoom:
@@ -131,15 +128,17 @@ class ArenaRoom:
     def battleArena(self):
         #Creating a random amount of enemies to spawn into the battle
         enemyAmount = random.randint(1,5)
-        enemyType = random.choice([EnemyEncounter.Bandit(),EnemyEncounter.Wolf()])
+        banditEnemy = EnemyEncounter.Bandit()
+        wolfEnemy = EnemyEncounter.Wolf()
+        enemyType = random.choice([banditEnemy, wolfEnemy])
         
         #Communicating to the player about the amount of combatents
         print("You have entered an Arena, prepare to fight!!")
         for enemy in range (0,enemyAmount):
             self.__totalEnemies.append(enemyType)
-        #Printing the list of enemies that have appeared
+        #Printing the list of enemies that have appeared with string emagic method
         for enemy in self.__totalEnemies:
-            print(f"A {enemy} has appeared!!!")
+            print(f"A {str(enemy)} has appeared!!!")
             self.__remainingEnemies += 1
         
         return "Combat commences"
