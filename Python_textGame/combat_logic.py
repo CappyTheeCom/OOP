@@ -28,17 +28,19 @@ class Combat:
                return f"An error has occurred!!"
     
     #Creating enemy defensive points and hit-chance
-    def enemyHitChance(self, enemyDP):
+    def enemyHitChance(self):
+          
+      for enemy in self._enemyList:
           playerDmgRoll = random.randint(0, 20)
-          enemyDefense = enemyDP
+          enemyDefense = enemy.getEnemyDF()
 
           if playerDmgRoll <= enemyDefense:
                playerDmg = 0 
-               return f"Player did {playerDmg}dmg to enemy!!!"
+               print(f"Player did {playerDmg}dmg to enemy!!!")
           elif playerDmgRoll > enemyDefense:
                playerDmg = random.randint(0, self._playerWeapon._weaponAtk ) - enemyDefense
-               self._enemy.hitEnemy(playerDmg)
-               return f"Player did {playerDmg}dmg to enemy!!!"
+               enemy.hitEnemy(playerDmg)
+               print(f"Player did {playerDmg}dmg to enemy!!!")
 
 
 

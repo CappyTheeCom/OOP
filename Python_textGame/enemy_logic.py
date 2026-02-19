@@ -66,6 +66,9 @@ class Bandit(Enemy):
      def banditAtk(self):
           attack = random.randint(0,self._atk)
           return f"You have taken {attack}dmg"
+     
+     def __str__(self):
+          return "Bandit"
 
 
 #Creating wolf enemy type               
@@ -82,28 +85,5 @@ class Wolf(Enemy):
           attack = random.randint(0,self._atk)
           return f"You have taken {attack}dmg"
      
-
-class Ogre(Enemy):
-     
-     #Changing stats to make it a more dealy encounter 
-     def __init__(self, name=None):
-          super().__init__(name)
-          if self._name == None:
-               name = "Orge"
-          
-          self._enemyHp = 250 
-          self._enemyDp = 15
-          self._atk = 20
-     
-     def enemyAtk(self):
-          attack = random.randint(0,self._atk)
-
-          if attack > 15:
-               stun = f"You have taken {attack}dmg and are Stunned"
-               return stun
-          else:
-               return f"You have taken {attack}dmg"
-     
-     def enemyName(self):
-          return self._name
-
+     def __str__(self):
+          return "Wolf"

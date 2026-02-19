@@ -38,7 +38,7 @@ class Player:
               else:
                    return "Please select a proper age range!!"
          #Orcs and tieflings share the same age range
-         elif self._race in ["tiefling, orc"]:
+         elif self._race in ["tiefling", "orc"]:
               if 30 <= self.__age <= 500:
                    return f"Your age is {self.__age}"
               else:
@@ -52,10 +52,10 @@ class Player:
    
     #Allocating player health        
     def playerBonusStats(self):
-         if self._race in ["dwarf, orc"]:
+         if self._race in ["dwarf","orc"]:
               self._hp += 30
               return f"Your current hp with race bonus: {self._hp}"
-         elif self._race in ["elf,half-elf,tiefling"]:
+         elif self._race in ["elf","half-elf","tiefling"]:
               self._mp += 30 
               return f"Your current mp with race bonus: {self._mp}"
          elif self._race in {"human"}:
@@ -178,13 +178,13 @@ class Weapon:
           if self._player._sp >= 130:
                print("Light weapons available: ", end='')
                for weapons in self._lightWeapons:
-                    print(weapons, end='') 
+                    print(weapons, end=' ') 
                return 
           #magic profieceny 
           print("Magic weapons available: ", end='')
           if self._player._mp >= 130:
                for weapons in self._magicWeapons:
-                    print(weapons, end='') 
+                    print(weapons, end=' ') 
                return 
           
      #Creating weapon attack damage 

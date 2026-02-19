@@ -58,11 +58,11 @@ class GameExe:
             trapRoom = Dungeon.TrapRoom(self.__dungeon,self.__player)
             print(trapRoom.statusEffect())
         elif "Merchant-room" in currentRoom:
-            merhantRoom = Dungeon.MerchantRoom(self.__dungeon, self.__player)
+            merhantRoom = Dungeon.MerchantRoom(self.__dungeon, self.__inventory)
             print(merhantRoom.merchantStock())
         elif "Arena-room" in currentRoom:
             self._arenaRoom = Dungeon.ArenaRoom()
-            print(self._arenaRoom.battleArena())
+            self._arenaRoom.battleArena()
 
         return currentRoom
 
@@ -82,9 +82,8 @@ class GameExe:
             commenceCombat = Combat.Combat(self.__player, self._arenaRoom.enemiesInArena(), self.__playerWeapon)
             commenceCombat.enemyHitChance()
             commenceCombat.playerHitChance()
-            return commenceCombat
         elif playerChoice == 2:
-            return self.__inventory.usingPotion()
+             self.__inventory.usingPotion()
         else:
             return "There is no retreat :)"
         
