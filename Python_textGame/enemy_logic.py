@@ -15,14 +15,14 @@ class Enemy:
           saveState = 0 
           deathState = 0
 
+          #Creating enemy death states
           if self._enemyHp <= 0:
                print(f"{self._name} is in dying state!!!")
-               return
 
           while True: 
 
                #Creating condiitonal statement for the save state 
-               if saveRoll >= self._enemyDp:
+               if saveRoll + (self._enemyDp - 10 / 2 ) >= 10:
                     saveState += 1 
                     print(f"{self._name} has achieved {saveRoll} saves!!")
                else:
@@ -44,9 +44,8 @@ class Enemy:
                return enemyDrop
           
      #Getting enemy stats
-     def hitEnemy(self, hit):
-          enemyHealth = self._enemyHp - hit 
-          return enemyHealth
+     def getEnemyHp(self):
+          return self._enemyHp
      
      def getEnemyDF(self):
           return self._enemyDp

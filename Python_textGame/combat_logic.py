@@ -3,16 +3,15 @@ import random
 
 class Combat:
     
-    def __init__(self, player, enemy, weapon):
+    def __init__(self, player, weapon, enemy):
         self._player = player 
         self._playerWeapon = weapon
-        self._enemyList = enemy
-        self._turn = []
+        self._enemy = enemy
+        self._arena = ArenaRoom()
 
     #Creating character hit chance
-    def playerHitChance(self):
-     for enemy in self._enemyList:
-          enemyDmgRoll = random.randint(0, enemy._atk)
+    def playerHitChance(self,enemyAtk):
+          enemyDmgRoll = random.randint(0, enemyAtk)
           
           #If enemy damage is less than the armor class
           if enemyDmgRoll <= self._player._dp:
@@ -20,9 +19,9 @@ class Combat:
           #If enemy damage is greater than the armor class
           elif enemyDmgRoll > self._player._dp:
                #Enemy damage
-               enemyDmg = random.randint(0, enemy._atk - self._player._dp)
+               enemyDmg = random.randint(0, enemyAtk - self._player._dp)
                
-               self._hp -= enemyDmg
+               self._player._hp -= enemyDmg
                return f"The enemy has landed a hit. You take {enemyDmg} damage!!"
           #If something else happens that is not met by the conditions
           else:
