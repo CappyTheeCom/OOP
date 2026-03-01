@@ -10,7 +10,7 @@ class PlayerInventory:
         self._playerInventory = {"gold": 0,
                                  "weapon": "None",
                                  "armor": "None",
-                                 "potion": "None"}
+                                 "potion": "Health-potion"}
     
     #Gather gold from dead enemies
     def pickingGold(self, name):
@@ -46,9 +46,9 @@ class PlayerInventory:
         potion_name = self._playerInventory.get("potion")
             #If the player potion is health
         if potion_name == "Health-potion":
-            self.__player.playerHeal(50)
+            healPlayer = self.__player.playerHeal(50)
             self._playerInventory.get("potion") == "None"
-            return f"You used a health potion: {self.__player.playerHealth()}hp"
+            return f"You used a health potion: {healPlayer}hp"
         return "No potions were found!"
     
     #Creating a purchasing function for the merchants room works
@@ -73,6 +73,9 @@ class PlayerInventory:
     #Creating a return value for the gold to be checked
     def gettingGold(self):
         return self._playerInventory.get("gold")
+    
+
+
 
 
 

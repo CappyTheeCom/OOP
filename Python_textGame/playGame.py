@@ -45,7 +45,7 @@ class GameExe:
         self.__playerWeapon.weaponStart()
         startingWeapon = input("Please select a weapon: ")
         print(self.__inventory.newWeapon(startingWeapon))
-        print(self.__playerWeapon.weaponDmg(startingWeapon))
+        print(self.__playerWeapon.weaponDmgCheck(startingWeapon))
         return
     
     def dungeonSequence(self):
@@ -79,7 +79,7 @@ class GameExe:
 
         #Menu selection
         if playerChoice == 1:
-            commenceCombat = Combat.Combat(self.__player, self._arenaRoom.enemiesInArena(), self.__playerWeapon)
+            commenceCombat = Combat.Combat(self.__player, self.__playerWeapon, self._arenaRoom.enemiesInArena())
             commenceCombat.enemyHitChance()
             commenceCombat.playerHitChance()
         elif playerChoice == 2:

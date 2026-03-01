@@ -2,7 +2,6 @@
 import random
 import enemy_logic as EnemyEncounter
 from player_logic import PlayerClass
-import combat_logic as Combat
 
 class DungeonRooms:
 
@@ -143,13 +142,13 @@ class ArenaRoom:
         
         return "Combat commences"
         
-    def enemyDeathRemoval(self,playerHit):
+    def enemyDeathRemoval(self):
         totalEnemies = self.__totalEnemies
         
         #Looping through the list of enemies and hitting all enemies from the different attack roles
         #Creating an copied list from the original list, allowing for the removal of enemies without accidently skipping [:]
         for death in totalEnemies[:]:
-            enemiesHealth = death.hitEnemy(playerHit)
+            enemiesHealth = death.getEnemyHp()
             
             if enemiesHealth <= 0:
                 self.__remainingEnemies -= 1
@@ -159,6 +158,9 @@ class ArenaRoom:
     #Returning the enemys from the arena 
     def enemiesInArena(self):
         return self.__totalEnemies
+    
+    def remainingEnemies(self):
+        return self.__remainingEnemies
 
 
 #Creating boss encounter

@@ -3,9 +3,9 @@ import random
 #Making enemy template
 class Enemy:
      def __init__(self, name):
-          self._enemyHp = 100 
+          self._enemyHp = 25 
           self._enemyDp = 10 
-          self._atk = 15 
+          self._atk = 0 
           self._name = name
     
      #Creating enemy death state 
@@ -43,6 +43,12 @@ class Enemy:
                print(f"Enemy dropped {enemyDrop} Gold!")
                return enemyDrop
           
+
+     #Creating enemy hit chances      
+     def hitEnemy(self,playerDmg):
+          currentHp = self._enemyHp - playerDmg
+          return currentHp
+
      #Getting enemy stats
      def getEnemyHp(self):
           return self._enemyHp
@@ -61,12 +67,43 @@ class Bandit(Enemy):
           super().__init__(name)
           if self._name == None:
                name = "Bandit"
+               self._weaponAttributes = {"Strength" : 10,
+                                         "Intelligence": 10, 
+                                         "Dexterity": 10}
+               self._classes = ["warrior","rogue","mage"] 
      
-     #Creating bandit attack pattern 
-     def banditAtk(self):
-          attack = random.randint(0,self._atk)
-          return f"You have taken {attack}dmg"
+     #Adding different classes to improve dealt damage from enemies
+     def classAttributes(self):
+               enemyClass = random.choice(self._classes)
+               if enemyClass == "warrior":
+                    self._hp += 10 
+                    self._mp -= 7
+                    self._sp += 10
+                    self._dp += 10
+                    self._weaponAttributes["Strength"] += 8
+                    self._weaponAttributes["Intelligence"] -= 2
+                    self._weaponAttributes["Dexterity"] += 2
+                    return 
+               elif enemyClass == "rogue":
+                    self._hp -= 5 
+                    self._mp += 5 
+                    self._sp += 10 
+                    self._dp += 7
+                    self._weaponAttributes["Strength"] += 2
+                    self._weaponAttributes["Intelligence"] += 2
+                    self._weaponAttributes["Dexterity"] += 6
+                    return
+               elif enemyClass == "mage":
+                    self._hp -= 10 
+                    self._mp += 10 
+                    self._sp += 7
+                    self._dp += 5
+                    self._weaponAttributes["Strength"] -= 2
+                    self._weaponAttributes["Intelligence"] += 8
+                    self._weaponAttributes["Dexterity"] += 2
+                    return 
      
+         
      def __str__(self):
           return "Bandit"
 

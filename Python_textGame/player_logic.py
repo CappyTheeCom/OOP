@@ -5,9 +5,9 @@ class Player:
         self.__age = age 
         self.__name = name 
         self._race = race
-        self._hp = 100
-        self._mp = 100 
-        self._sp = 100
+        self._hp = 25
+        self._mp = 25 
+        self._sp = 25
         self.__playableRace = ["human","dwarf","elf","tiefling","half-elf","orc"]
     
     #Checking for the player health, stamania and mana 
@@ -101,27 +101,27 @@ class PlayerClass(Player):
      def classAttributes(self):
           if self.__class in self.__classType:
                if self.__class == "warrior":
-                    self._hp += 50 
-                    self._mp -= 30
+                    self._hp += 10 
+                    self._mp -= 7
                     self._sp += 10
-                    self._dp += 15
+                    self._dp += 10
                     self._weaponAttributes["Strength"] += 8
                     self._weaponAttributes["Intelligence"] -= 2
                     self._weaponAttributes["Dexterity"] += 2
                     return f"Your {self.__class} attributes are: hp:{self._hp:<15} sp:{self._sp:<15} mp:{self._mp:<15} "
                elif self.__class == "rogue":
-                    self._hp -= 10 
-                    self._mp += 15 
-                    self._sp += 50 
-                    self._dp += 10
+                    self._hp -= 5 
+                    self._mp += 5 
+                    self._sp += 10 
+                    self._dp += 7
                     self._weaponAttributes["Strength"] += 2
                     self._weaponAttributes["Intelligence"] += 2
                     self._weaponAttributes["Dexterity"] += 6
                     return f"Your {self.__class} attributes are: hp{self._hp:<15} sp{self._sp:<20} mp{self._mp:^10} "
                elif self.__class == "mage":
-                    self._hp -= 20 
-                    self._mp += 50 
-                    self._sp += 15
+                    self._hp -= 10 
+                    self._mp += 10 
+                    self._sp += 7
                     self._dp += 5
                     self._weaponAttributes["Strength"] -= 2
                     self._weaponAttributes["Intelligence"] += 8
@@ -138,21 +138,23 @@ class PlayerClass(Player):
          if self._hp < 0: 
               print(f"{self.__name} has entered a dying state!!!")
           
-         while True:
-               #Creating save and death rolls
-               if (rollChance) + (self._dp - 10 / 2)  >= 10:
-                    saveRolls += 1 
-                    print(f"You have {saveRolls}/3 left to revive")
-               else:
-                    deathRolls += 1 
-                    print(f"You have {deathRolls}/3 left before death")
-
-               if saveRolls == 3:
-                    self._hp = 20 + self._dp
-                    return f"{self.__name} have succeeded the save rolls HP: {self._hp}"
-               
-               elif deathRolls == 3:
-                    return f"{self.__name} has died, game over!!"
+              while True:
+                    #Creating save and death rolls
+                    if (rollChance) + (self._dp - 10 / 2)  >= 10:
+                         saveRolls += 1 
+                         print(f"You have {saveRolls}/3 left to revive")
+                    else:
+                         deathRolls += 1 
+                         print(f"You have {deathRolls}/3 left before death")
+                    
+                    #Checking if either critera is fulfilled
+                    if saveRolls == 3:
+                         self._hp = 20 + self._dp
+                         return f"{self.__name} have succeeded the save rolls HP: {self._hp}"
+                    elif deathRolls == 3:
+                         return f"{self.__name} has died, game over!!"
+         else:
+              pass               
 
                    
 #Craeitng weapon template
@@ -160,7 +162,9 @@ class Weapon:
      #Using player as a way to pass the method through the class
      def __init__(self, player):
           self._player = player
-          self._weaponAtk = 0
+          self._weaponModifier = 0
+          self._minDamage = 0
+          self._maxDamage = 0
           self._lightWeapons = ["quarter-staff", "short-sword", "dagger", "long-sword", "mace", "buckle", "crossbow"]
           self._heavyWeapons = ["great-sword", "great-hammer", "great-mace", "bow", "club"]
           self._magicWeapons = ["tome", "spells", "staff", "runes"]
@@ -193,32 +197,33 @@ class Weapon:
           if weapon in self._heavyWeapons:
                #Getting the strength modifier
                strengthModify = self._player._weaponAttributes.get("Strength")
-               self._weaponAtk = (strengthModify - 10) // 2
-               min_damage = 0 + self._weaponAtk
-               max_damage = 10 + self._weaponAtk               
-               return f"Your {weapon} does {min_damage}-{max_damage}!"
+               self._weaponModifier = (strengthModify - 10) // 2
+               self._minDamage = 0 + self._weaponModifier
+               self._maxDamage = 10 + self._weaponModifier               
+               return f"Your {weapon} does {self._minDamage}-{self._maxDamage}!"
           
           #checking for stamania profieceny 
           elif weapon in self._lightWeapons:
                dexModify = self._player._weaponAttributes.get("Dexterity")
-               self._weaponAtk = (dexModify - 10) // 2
-               min_damage = 2 + self._weaponAtk
-               max_damage = 8 + self._weaponAtk  
-               return f"Your {weapon} does {min_damage}-{max_damage}!"
+               self._weaponModifier = (dexModify - 10) // 2
+               self._minDamage = 2 + self._weaponModifier
+               self._maxDamage = 8 + self._weaponModifier  
+               return f"Your {weapon} does {self._minDamage}-{self._maxDamage}!"
           
           #Checking if the player profiecent in magic damage 
           elif weapon in self._magicWeapons:
                intModify = self._player._weaponAttributes.get("Intelligence")
-               self._weaponAtk = (intModify - 10) // 2
-               min_damage = 2 + self._weaponAtk
-               max_damage = 8 + self._weaponAtk  
-               return f"Your {weapon} does {min_damage}-{max_damage}!"
+               self._weaponModifier = (intModify - 10) // 2
+               self._minDamage = 2 + self._weaponModifier
+               self._maxDamage = 8 + self._weaponModifier  
+               return f"Your {weapon} does {self._minDamage}-{self._maxDamage}!"
           else:
                return f"There no weapon equipped!!!"
      
      #Getting weapon stat 
      def getWeaponAtk(self):
-          return self._weaponAtk
+          weaponDmg = random.randint(self._minDamage, self._maxDamage)
+          return weaponDmg
 
 
 #Creating light weapon profieceny and skills
