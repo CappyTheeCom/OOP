@@ -122,6 +122,7 @@ class ArenaRoom:
 
     def __init__(self):
         self.__totalEnemies = []
+        self.__enemiesInCmb = None
         self.__remainingEnemies = 0
 
     def battleArena(self):
@@ -143,21 +144,23 @@ class ArenaRoom:
         return "Combat commences"
         
     def enemyDeathRemoval(self):
-        totalEnemies = self.__totalEnemies
         
         #Looping through the list of enemies and hitting all enemies from the different attack roles
         #Creating an copied list from the original list, allowing for the removal of enemies without accidently skipping [:]
-        for death in totalEnemies[:]:
-            enemiesHealth = death.getEnemyHp()
+        for death in self.__enemiesInCmb:
             
-            if enemiesHealth <= 0:
+            if death.enemyDeathState() is True:
                 self.__remainingEnemies -= 1
                 self.__totalEnemies.remove(death)
+                self.__enemiesInCmb.remove(death)
+                print(f"{self.__remainingEnemies} enemies remain!")
 
         
     #Returning the enemys from the arena 
     def enemiesInArena(self):
-        return self.__totalEnemies
+        if self.__enemiesInCmb is None:
+            self.__enemiesInCmb = self.__totalEnemies[:]
+        return self.__enemiesInCmb
     
     def remainingEnemies(self):
         return self.__remainingEnemies

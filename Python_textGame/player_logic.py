@@ -2,8 +2,8 @@ import random
 #Creating a player based class
 class Player: 
     def __init__(self,name,race,age):
-        self.__age = age 
-        self.__name = name 
+        self._age = age 
+        self._name = name 
         self._race = race
         self._hp = 25
         self._mp = 25 
@@ -136,11 +136,11 @@ class PlayerClass(Player):
          deathRolls = 0 
 
          if self._hp < 0: 
-              print(f"{self.__name} has entered a dying state!!!")
+              print(f"{self._name} has entered a dying state!!!")
           
               while True:
                     #Creating save and death rolls
-                    if (rollChance) + (self._dp - 10 / 2)  >= 10:
+                    if rollChance > 10:
                          saveRolls += 1 
                          print(f"You have {saveRolls}/3 left to revive")
                     else:
@@ -150,9 +150,11 @@ class PlayerClass(Player):
                     #Checking if either critera is fulfilled
                     if saveRolls == 3:
                          self._hp = 20 + self._dp
-                         return f"{self.__name} have succeeded the save rolls HP: {self._hp}"
+                         print(f"{self._name} have succeeded the save rolls HP: {self._hp}")
+                         return False
                     elif deathRolls == 3:
-                         return f"{self.__name} has died, game over!!"
+                         print(f"{self._name} has died, game over!!")
+                         return True
          else:
               pass               
 

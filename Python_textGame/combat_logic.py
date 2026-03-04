@@ -3,6 +3,7 @@ import random
 import player_logic as Player
 from room_logic import ArenaRoom as Arena
 import inventory_logic as Inventory
+from enemy_logic import Enemy 
 
 class Combat:
     
@@ -43,6 +44,9 @@ class Combat:
                enemy.hitEnemy(playerDmg)
                print(f"Player did {playerDmg}dmg to enemy!!!")
 
+                   
+                   
+
 
 #Creating testing code
 if __name__ == '__main__':
@@ -77,15 +81,24 @@ if __name__ == '__main__':
                playerChoice = int(input("Please select an option!: "))
                #Creating turn based combat
                if playerChoice == 1:
-
+                    
+                    #Initalising current combat between player and enemies 
                     commenceCombat = Combat(playerCreation,playerWeapon,startArena.enemiesInArena())
-                    commenceCombat.enemyHitChance()
-                    startArena.enemyDeathRemoval()
 
+                    commenceCombat.enemyHitChance()
+                    for enemy in startArena.enemiesInArena():
+                        enemyDeath = enemy.enemyDeathState()
+
+                        if enemyDeath is True:
+                            startArena.enemyDeathRemoval()
+                    
+                    #Creating player hit-chance and whether the player dies
                     commenceCombat.playerHitChance()
-                    playerCreation.playerDeathState()
+                    if playerCreation.playerDeathState() is True:
+                        break
+                        
 
                elif playerChoice == 2:
-                    print(playerInventory.usingPotion())
+                   playerInventory.usingPotion() 
      
      CombatTest()

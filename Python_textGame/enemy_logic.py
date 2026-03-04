@@ -5,13 +5,12 @@ class Enemy:
      def __init__(self, name):
           self._enemyHp = 25 
           self._enemyDp = 10 
-          self._atk = 0 
-          self._name = name
+          self._atk = 240 
+          self._name = name 
     
      #Creating enemy death state 
      def enemyDeathState(self):
           #creating save rolls
-          saveRoll = random.randint(0,20)
           saveState = 0 
           deathState = 0
 
@@ -20,21 +19,24 @@ class Enemy:
                print(f"{self._name} is in dying state!!!")
 
           while True: 
+               saveRoll = random.randint(0,20)
 
                #Creating condiitonal statement for the save state 
-               if saveRoll + (self._enemyDp - 10 / 2 ) >= 10:
+               if saveRoll >= 10:
                     saveState += 1 
-                    print(f"{self._name} has achieved {saveRoll} saves!!")
+                    print(f"{self._name} has achieved {saveState} saves!!")
                else:
                     deathState += 1
-                    print(f"{self._name} has failed a save roll!!!")
+                    print(f"{self._name} has {deathState} death roll!!!")
                
                #Breaking the while loop if either state has been achieved 
-               if saveRoll == 3:
-                    self._enemyHp = 20 + self._enemyDp
-                    return f"The {self._name} returns to combat with {self._enemyHp}HP"
+               if saveState == 3:
+                    self._enemyHp = 5 + self._enemyDp
+                    print(f"The {self._name} returns to combat with {self._enemyHp}HP")
+                    return False
                elif deathState == 3:
-                    return f"The {self._name} has died"
+                    print(f"The {self._name} has died")
+                    return True
      
      #Enemy gold drop chance
      def enemyGold(self):
@@ -66,7 +68,7 @@ class Bandit(Enemy):
      def __init__(self, name=None):
           super().__init__(name)
           if self._name == None:
-               name = "Bandit"
+               self._name = "Bandit"
                self._weaponAttributes = {"Strength" : 10,
                                          "Intelligence": 10, 
                                          "Dexterity": 10}
@@ -115,12 +117,12 @@ class Wolf(Enemy):
      def __init__(self, name=None):
           super().__init__(name)
           if self._name == None:
-               name = "Wolf"
+               self._name = "Wolf"
      
      #Creating wolf attack pattern 
      def wolfAtk(self):
           attack = random.randint(0,self._atk)
           return f"You have taken {attack}dmg"
-     
+
      def __str__(self):
           return "Wolf"
