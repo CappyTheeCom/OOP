@@ -5,7 +5,7 @@ class Enemy:
      def __init__(self, name):
           self._enemyHp = 25 
           self._enemyDp = 10 
-          self._atk = 240 
+          self._atk = 4 
           self._name = name 
     
      #Creating enemy death state 
@@ -38,18 +38,11 @@ class Enemy:
                     print(f"The {self._name} has died")
                     return True
      
-     #Enemy gold drop chance
-     def enemyGold(self):
-          if self._enemyHp <= 0:
-               enemyDrop = 50 # will change back into proper rng gold output
-               print(f"Enemy dropped {enemyDrop} Gold!")
-               return enemyDrop
           
-
      #Creating enemy hit chances      
      def hitEnemy(self,playerDmg):
-          currentHp = self._enemyHp - playerDmg
-          return currentHp
+          self._enemyHp -= playerDmg
+          return self._enemyHp
 
      #Getting enemy stats
      def getEnemyHp(self):
@@ -72,43 +65,73 @@ class Bandit(Enemy):
                self._weaponAttributes = {"Strength" : 10,
                                          "Intelligence": 10, 
                                          "Dexterity": 10}
-               self._classes = ["warrior","rogue","mage"] 
+               self._classes = ["warrior","rogue","mage"]
+               self._enemyClass = None
+               self._minDam = 0
+               self._maxDam = 0
      
      #Adding different classes to improve dealt damage from enemies
      def classAttributes(self):
-               enemyClass = random.choice(self._classes)
-               if enemyClass == "warrior":
-                    self._hp += 10 
-                    self._mp -= 7
-                    self._sp += 10
-                    self._dp += 10
+               self._enemyClass = random.choice(self._classes)
+               if self._enemyClass == "warrior":
+                    self._name = "Bandit-Warrior"
+                    self._enemyHp += 10 
+                    self._enemyDp += 7
                     self._weaponAttributes["Strength"] += 8
                     self._weaponAttributes["Intelligence"] -= 2
                     self._weaponAttributes["Dexterity"] += 2
                     return 
-               elif enemyClass == "rogue":
-                    self._hp -= 5 
-                    self._mp += 5 
-                    self._sp += 10 
-                    self._dp += 7
+               elif self._enemyClass == "rogue":
+                    self._name = "Bandit-Rogue"
+                    self._enemyHp -= 5 
+                    self._enemyDp += 5
                     self._weaponAttributes["Strength"] += 2
                     self._weaponAttributes["Intelligence"] += 2
                     self._weaponAttributes["Dexterity"] += 6
                     return
-               elif enemyClass == "mage":
-                    self._hp -= 10 
-                    self._mp += 10 
-                    self._sp += 7
-                    self._dp += 5
+               elif self._enemyClass == "mage":
+                    self._name = "Bandit-Mage"
+                    self._enemyHp -= 10 
+                    self._enemyDp += 3
                     self._weaponAttributes["Strength"] -= 2
                     self._weaponAttributes["Intelligence"] += 8
                     self._weaponAttributes["Dexterity"] += 2
                     return 
      
-         
+     #Creating enemy attack modifier to be similar to the player attack modifier 
+     def getEnemyAtk(self):
+          if self._enemyClass == "warrior":
+               abtMod = self._weaponAttributes.get("Strength")
+               weaponMod = (abtMod - 10) // 2
+               self._minDam = 0 + weaponMod
+               self._maxDam = 10 + weaponMod
+               self._atk = random.randint(self._minDam, self._maxDam)
+               return self._atk
+          elif self._enemyClass == "rogue":
+               abtMod = self._weaponAttributes.get("Dexterity")
+               weaponMod = (abtMod - 10) // 2
+               self._minDam = 2 + weaponMod
+               self._maxDam = 8 + weaponMod
+               self._atk =  random.randint(self._minDam, self._maxDam)
+               return self._atk
+          elif self._enemyClass == "mage":
+               abtMod = self._weaponAttributes.get("Intelligence")
+               weaponMod = (abtMod - 10) // 2 
+               self._minDam = 0 + abtMod
+               self._maxDam = 12 + abtMod
+               self._atk = random.randint(self._minDam, self._maxDam)
+               return self._atk
+          
      def __str__(self):
-          return "Bandit"
 
+          if self._enemyClass == "warrior":
+               return "Bandit-Warrior"
+          elif self._enemyClass == "rogue":
+               return "Bandit-Rogue"
+          elif self._enemyClass == "mage":
+               return "Bandit-Mage"
+          
+               
 
 #Creating wolf enemy type               
 class Wolf(Enemy):
@@ -118,11 +141,13 @@ class Wolf(Enemy):
           super().__init__(name)
           if self._name == None:
                self._name = "Wolf"
+               self._atk = 10
      
      #Creating wolf attack pattern 
-     def wolfAtk(self):
-          attack = random.randint(0,self._atk)
-          return f"You have taken {attack}dmg"
-
+     def getEnemyAtk(self):
+          self._atk = random.randint(0,self._atk)
+          return self._atk
+     
+     #Creating a class string 
      def __str__(self):
           return "Wolf"

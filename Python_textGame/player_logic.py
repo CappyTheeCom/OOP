@@ -75,8 +75,8 @@ class Player:
              return f"Your name is {self.__name}"
     
     def playerHeal(self, potion):
-         currentPlayerHp = self._hp + potion
-         return currentPlayerHp
+         self._hp += potion
+         return self._hp
          
          
 
@@ -126,7 +126,7 @@ class PlayerClass(Player):
                     self._weaponAttributes["Strength"] -= 2
                     self._weaponAttributes["Intelligence"] += 8
                     self._weaponAttributes["Dexterity"] += 2
-                    return f"Your {self.__class} attributes are: hp{self._hp:<15} sp{self._sp:<20} mp{self._mp:^10} "
+                    return f"Your {self.__class} attributes are: hp{self._hp:<15} sp{self._sp:<16} mp{self._mp:<17} "
           else:
                return "Input a proper class!!!"
           
@@ -156,7 +156,12 @@ class PlayerClass(Player):
                          print(f"{self._name} has died, game over!!")
                          return True
          else:
-              pass               
+              pass 
+     
+     #Allowing the player to check current stats to see reasources
+     def checkingPlayerStats(self):
+          return f"Your current stats: hp:{self._hp:<15} sp:{self._sp:<16} mp:{self._mp}"
+
 
                    
 #Craeitng weapon template

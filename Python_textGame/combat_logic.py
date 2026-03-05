@@ -3,7 +3,6 @@ import random
 import player_logic as Player
 from room_logic import ArenaRoom as Arena
 import inventory_logic as Inventory
-from enemy_logic import Enemy 
 
 class Combat:
     
@@ -48,7 +47,7 @@ class Combat:
                    
 
 
-#Creating testing code
+#Creating testing code for combat functions between enemies and player
 if __name__ == '__main__':
 
      def CombatTest():
@@ -74,7 +73,7 @@ if __name__ == '__main__':
                #Creating menu
                print("1. Attack\n" \
                      "2. Potion\n" \
-                     "3. Retreat" \
+                     "3. Check-Stats" \
                     )
                
                #Player selects what option they want to do
@@ -85,20 +84,27 @@ if __name__ == '__main__':
                     #Initalising current combat between player and enemies 
                     commenceCombat = Combat(playerCreation,playerWeapon,startArena.enemiesInArena())
 
-                    commenceCombat.enemyHitChance()
+          
                     for enemy in startArena.enemiesInArena():
                         enemyDeath = enemy.enemyDeathState()
+                        commenceCombat.enemyHitChance() 
 
+                        #Checking if the function returns true to allow for death removal
                         if enemyDeath is True:
                             startArena.enemyDeathRemoval()
+                            playerInventory.pickingGold()
                     
                     #Creating player hit-chance and whether the player dies
                     commenceCombat.playerHitChance()
                     if playerCreation.playerDeathState() is True:
                         break
-                        
-
+               #Player using health potions
                elif playerChoice == 2:
-                   playerInventory.usingPotion() 
+                   print(playerInventory.usingPotion())
+
+               #Checking current player stats
+               elif playerChoice == 3:
+                   print(playerCreation.checkingPlayerStats())
+                   print(f"Current gold: {playerInventory.gettingGold()}")
      
      CombatTest()

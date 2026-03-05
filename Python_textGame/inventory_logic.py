@@ -1,4 +1,4 @@
-import enemy_logic as enemyInventory
+import random
 
 #Creating player inventory for merchant usage and proficeny bonuses
 class PlayerInventory: 
@@ -7,24 +7,16 @@ class PlayerInventory:
         self.__player = player 
         
         #Creating a dictonary for manipulation
-        self._playerInventory = {"gold": 0,
-                                 "weapon": "None",
-                                 "armor": "None",
-                                 "potion": "Health-potion"}
+        self._playerInventory = {"gold": 25,
+                                 "weapon": None,
+                                 "armor": None,
+                                 "potion": None}
     
     #Gather gold from dead enemies
-    def pickingGold(self, name):
-        
-        #Checking for the bandit name
-        if name == "Bandit":
-            #Creating bandit class
-            banditGold = enemyInventory.Bandit()
-            self._playerInventory["gold"] += banditGold.enemyGold()
-        #Checking for the wolf name
-        elif name == "Wolf":
-            #Creating wolf class 
-            wolfGold = enemyInventory.Wolf()
-            self._playerInventory["gold"] += wolfGold.enemyGold()
+    def pickingGold(self):
+        enemyGold = random.randint(2,10)
+        self._playerInventory['gold'] += enemyGold
+        return f"You gained {enemyGold}"
 
     #Updating the player inventory with a new weapon 
     def newWeapon(self, new_weapon):
@@ -44,31 +36,57 @@ class PlayerInventory:
     def usingPotion(self):
         #Looping through the dictionary to ensure its inside the player inventory
         potion_name = self._playerInventory.get("potion")
-            #If the player potion is health
+
+        #If the player potion is health
         if potion_name == "Health-potion":
-            healPlayer = self.__player.playerHeal(50)
-            self._playerInventory.get("potion") == "None"
+            healPlayer = self.__player.playerHeal(20)
+            self._playerInventory['potion'] = None
             return f"You used a health potion: {healPlayer}hp"
-        return "No potions were found!"
+        else:
+            return "No potions were found!"
     
     #Creating a purchasing function for the merchants room works
     def buyingItem(self):
         #An expandable list that can allow for the addition of more potions if desired
-        potionList = ["health","stamania","magic"]
+        potionList = {1: "health-potion",
+                      2: "stamanina-Potion",
+                      3: "magic-Potion"}
         selectItem = input("\nPlease select an potion(press E to exit): ").lower()
+        selectPotion = None
 
-        #Checks if the potion is within the allocate list and removes the player gold 
-        if selectItem in potionList:
-            if self._playerInventory.get("gold") >= 50:
-                self._playerInventory["potion"] = selectItem
-                self._playerInventory["gold"] -= 50
-                return f'You have purchased {self._playerInventory.get("potion")}\n'
-            else:
-                print("You do not have enough gold!!")
+        #Checking if the user applies interger for the potion instead
+        if selectItem.isdigit():
+            itemNumber = int(selectItem)
+            #Uses the item function for the dictionary to display both keys and values
+            for potionNumber, potionName in potionList.items():
+                if potionNumber == itemNumber:
+                    selectPotion = potionName
+                    break 
+            #If the integer doesn't return with a proper 
+            if selectPotion == None:
+                return "Input a proper integer!"
+              
+        elif selectItem in potionList.values():
+            selectPotion = selectItem
+        #If the player decides to leave the shop
         elif selectItem == "e":
             return f"You have left the shop!"
         else:
-            print("Please select a proper option!")
+            return("Please select a proper option!")
+
+        #Checking if the player already has a potion in their inventory
+        if self._playerInventory.get("potion") is not None:
+            return f"You already have {self._playerInventory.get("potion")} in your inventory!"
+            
+        #Ensuring that the player has sufficent gold, otherwise they are kicked out!
+        elif self._playerInventory.get("gold") >= 25:
+            self._playerInventory["potion"] = selectPotion
+            self._playerInventory["gold"] -= 25
+            return f'You have purchased {selectPotion}\n'
+        else:
+            print("You do not have enough gold!!")
+            return "Come back to me once you have some coin!"
+            
 
     #Creating a return value for the gold to be checked
     def gettingGold(self):

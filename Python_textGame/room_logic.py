@@ -1,7 +1,8 @@
 #Creating dungeon room type 
 import random
 import enemy_logic as EnemyEncounter
-from player_logic import PlayerClass
+import player_logic as Player
+import inventory_logic as Inventory
 
 class DungeonRooms:
 
@@ -12,7 +13,7 @@ class DungeonRooms:
         self._currentPlay = {"Trap-room"  : 0,
                              "Arena-room" : 0,
                              "Merchant-room" : 0,
-                             "Boss-room": 1}
+                            }
         self._roomSequence = []
         self._currentRoomIndex = 0
 
@@ -102,20 +103,17 @@ class TrapRoom:
 #Creating merchant room and purchasing items
 class MerchantRoom:
     
-    def __init__(self, dungeon, player):
-        self.__dungeon = dungeon
-        self.__player = player
-        self.__merchantStock = ["Health-potion","Stamania-potion","Magic-potion"]
+    def __init__(self):
+        self.__merchantStock = ["health-potion","stamania-potion","magic-potion"]
 
     #Merchant Merchandise
     def merchantStock(self):
      #Printing the available stock for the user
      print("My current items in stock: ")
-     for items in self.__merchantStock:
-        print(items, end=" ")
+     for index, items in enumerate(self.__merchantStock, start=1):
+        print(f"{index}. {items}")
 
-     self.__player.buyingItem()
-     return "You are welcome for my service..."
+     return
 
 #Creating arena room for the enemies to spawn and fight in
 class ArenaRoom:
@@ -130,17 +128,22 @@ class ArenaRoom:
         enemyAmount = random.randint(1,5)
         banditEnemy = EnemyEncounter.Bandit()
         wolfEnemy = EnemyEncounter.Wolf()
-        enemyType = random.choice([banditEnemy, wolfEnemy])
         
         #Communicating to the player about the amount of combatents
         print("You have entered an Arena, prepare to fight!!")
         for enemy in range (0,enemyAmount):
+            enemyType = random.choice([banditEnemy, wolfEnemy])
             self.__totalEnemies.append(enemyType)
+            
         #Printing the list of enemies that have appeared with string emagic method
         for enemy in self.__totalEnemies:
+            #Checking for enemy types
+            if enemy == banditEnemy:
+                enemy.classAttributes()
+            elif enemy == wolfEnemy:
+                pass
             print(f"A {str(enemy)} has appeared!!!")
             self.__remainingEnemies += 1
-        
         return "Combat commences"
         
     def enemyDeathRemoval(self):
@@ -166,16 +169,30 @@ class ArenaRoom:
         return self.__remainingEnemies
 
 
-#Creating boss encounter
-class BossRoom(DungeonRooms):
+#Creating dungeon room tests        
+if __name__ == "__main__":
     
-    def __init__(self):
-        super().__init__()
-    
-    #Creating a simple boss room for the enemy
-    def bossEncounter(self, boss):
-        return f"You have encoutnered an {boss}"
+    def MerchantRoomTest():
+          #Player creation for test
+          playerCreation = Player.PlayerClass("Jake","human",21,"warrior")
+          playerWeapon = Player.Weapon(playerCreation)
+          playerInventory = Inventory.PlayerInventory(playerCreation)
+          startingWeapon = "club"
 
+          print(playerCreation.classAttributes())
+          print(playerInventory.newWeapon(startingWeapon))
+          print(playerWeapon.weaponDmgCheck(startingWeapon))
         
+          
+          #Creating dungeon initlisation and test
+          testMerchant = MerchantRoom()
+
+          testMerchant.merchantStock()
+          print(playerInventory.buyingItem())
+    
+    
+
+
+    
 
     
