@@ -15,7 +15,7 @@ class DungeonRooms:
                              "Merchant-room" : 0,
                             }
         self._roomSequence = []
-        self._currentRoomIndex = 0
+        self._currentRoomIndex = -1
 
 
     #Creating length of the dungeon 
@@ -46,58 +46,60 @@ class DungeonRooms:
     
     #Creating getter methods for protected instances
     def getDungeonIndex(self):
-        return self._currentRoomIndex
+        dungeonIndex = self._currentRoomIndex
+        return dungeonIndex
     
     def getCurrentRoom(self):
         return self._currentRooms
-    
-    def getPlayerStateRoom(self):
-        roomType = self._roomSequence[self._currentRooms - 1]
-        return roomType
 
     def getDungeonRoomSequence(self):
         roomSequence = self._roomSequence
         return roomSequence
     
+    def getCurrentPlay(self):
+        return self._currentPlay
+    
     #Creating player movement 
     def next_room(self):
+     for index, room in enumerate(self._roomSequence):
         if self._currentRoomIndex < self._currentRooms - 1:
-            self._currentRoomIndex += 1   
-            return f"You have moved into the {self._currentRoomIndex} room!!"
+            self._currentRoomIndex +=1
+            index = self._currentRoomIndex 
+            room = self._roomSequence[index]
+            print(f"You have moved into the {index+1}:{room}!!")   
+            return room
         else:
             return f"You have reached the end!!"                    
 
 #Creating room types 
 class TrapRoom:
     
-    def __init__(self, dungeon, player):
-        self.__dungeon = dungeon
+    def __init__(self, player):
         self.__player = player
         
 
     #Creating a chance to cycle through whether the player recieves a debuff or buff by entering the room
     def statusEffect(self):
-        currentRoomIndex = self.__dungeon.getDungeonIndex()
-        dungeonSequence = self.__dungeon.getDungeonRoomSequence()
-        player = self.__player
 
-        #Chccking if trap rooms are inside the list and will play a message if its in the current room!!
-        if currentRoomIndex < len(dungeonSequence):
-                print("You have entered a trapped room!\n " \
+        print("You have entered a trapped room!\n " \
                     "Rolling saving dice to recieve a status effect!")
                 
-                #Creating a save roll from the trap room
-                playerSaveRoll = random.randint(0,29)
+        #Creating a save roll from the trap room
+        playerSaveRoll = random.randint(0,29)
                 
-                trapRoll = random.randint(0,20)
-                #Creating a fail method for the trap-room (WIll update the win condition later!)
-                if playerSaveRoll < trapRoll :
-                    trapDamageroll = random.randint(1,10) 
-                    playerDamage = (player.getPlayerDp()- trapDamageroll * 2)
-                    player.playerDamge(playerDamage)
-                    return f"You have recieved {playerDamage} from failing the trap-room!!!"
-                else:
-                    return f"You have escaped the trap-room!!"
+        trapRoll = random.randint(0,20)
+        #Creating a fail method for the trap-room (WIll update the win condition later!)
+        if playerSaveRoll < trapRoll :
+            trapDamageroll = random.randint(1,10) 
+            playerDamage = (self.__player.getPlayerDp()- trapDamageroll * 2)
+            self.__player.trapRoomDmg(playerDamage)
+            #If the player reaches 0 hp
+            if self.__player.getPlayerHealth() <= 0:
+                self.__player.playerDeathState()
+            else:
+                return f"You have recieved {playerDamage} from failing the trap-room!!!"
+        else:
+            return f"You have escaped the trap-room!!"
     
 
 #Creating merchant room and purchasing items
@@ -190,6 +192,52 @@ if __name__ == "__main__":
           testMerchant.merchantStock()
           print(playerInventory.buyingItem())
     
+    #Creating a testing of trapRoom logic 
+    def trapRoomTesting():
+          #Player creation for test
+          playerCreation = Player.PlayerClass("Jake","human",21,"warrior")
+          playerWeapon = Player.Weapon(playerCreation)
+          playerInventory = Inventory.PlayerInventory(playerCreation)
+          startingWeapon = "club"
+
+          print(playerCreation.classAttributes())
+          print(playerInventory.newWeapon(startingWeapon))
+          print(playerWeapon.weaponDmgCheck(startingWeapon))
+
+          trapRoom = TrapRoom(playerCreation)
+
+          print(trapRoom.statusEffect())
+
+    def movingRooms():
+        #Player creation for test
+        playerCreation = Player.PlayerClass("Jake","human",21,"warrior")
+        playerWeapon = Player.Weapon(playerCreation)
+        playerInventory = Inventory.PlayerInventory(playerCreation)
+        startingWeapon = "club"
+
+        #Creating dungeon initalisation 
+        dungeonSequence = DungeonRooms()
+
+        print(dungeonSequence.select_length())
+        print(dungeonSequence.getCurrentRoom())
+        print(dungeonSequence.getDungeonIndex())
+        print(dungeonSequence.getDungeonRoomSequence())
+        print(dungeonSequence.getCurrentPlay())
+
+       
+        if dungeonSequence.next_room() == "Trap-room":
+            trapRoom = TrapRoom(playerCreation)
+            print(trapRoom.statusEffect())
+
+        
+        
+
+
+    movingRooms()
+
+
+
+
     
 
 

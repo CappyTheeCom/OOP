@@ -23,16 +23,6 @@ class PlayerInventory:
         self._playerInventory["weapon"] = new_weapon
         return f'You have equipped {self._playerInventory.get("weapon")}'
     
-    #Updating the player inventory with a new armor
-    def newArmor(self, new_armor):
-        self._playerInventory["armor"] = new_armor
-        return f'You have equipped {self._playerInventory.get("armor")}'
-    
-    #Updating player potion slots
-    def newPotion(self, new_potion):
-        self._playerInventory["potion"] = new_potion
-        return f'You have equipped {self._playerInventory.get("potion")}'
-    
     def usingPotion(self):
         #Looping through the dictionary to ensure its inside the player inventory
         potion_name = self._playerInventory.get("potion")

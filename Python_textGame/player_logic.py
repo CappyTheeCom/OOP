@@ -11,7 +11,7 @@ class Player:
         self.__playableRace = ["human","dwarf","elf","tiefling","half-elf","orc"]
     
     #Checking for the player health, stamania and mana 
-    def getplayerHealth(self):
+    def getPlayerHealth(self):
          return self._hp
     
     def getplayerStamania(self):
@@ -76,6 +76,10 @@ class Player:
     
     def playerHeal(self, potion):
          self._hp += potion
+         return self._hp
+    
+    def trapRoomDmg(self, trap):
+         self._hp -= trap 
          return self._hp
          
          

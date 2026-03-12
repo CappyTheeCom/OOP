@@ -3,7 +3,7 @@ import player_logic as Player
 import enemy_logic as Enemy 
 import inventory_logic as UserInventory 
 import room_logic as Dungeon
-import combat_logic as Combat
+import combat_logic as ArenaCombat
 
 class GameExe:
      
@@ -48,45 +48,94 @@ class GameExe:
         print(self.__playerWeapon.weaponDmgCheck(startingWeapon))
         return
     
+    #Moving throughout the dungeon and the win condition 
     def dungeonSequence(self):
         #Creating entrance to the dungeon 
-        currentRoom = self.__dungeon.getPlayerStateRoom()
-        print(f"You have entered the {currentRoom}")
-        
-        #Checking what room type is presesnt in the processs
-        if "Trap-room" in currentRoom:
-            trapRoom = Dungeon.TrapRoom(self.__dungeon,self.__player)
-            print(trapRoom.statusEffect())
-        elif "Merchant-room" in currentRoom:
-            merhantRoom = Dungeon.MerchantRoom(self.__dungeon, self.__inventory)
-            print(merhantRoom.merchantStock())
-        elif "Arena-room" in currentRoom:
-            self._arenaRoom = Dungeon.ArenaRoom()
-            self._arenaRoom.battleArena()
+        movingRoom = self.__dungeon.next_room()
 
-        return currentRoom
+        if movingRoom == "Trap-room":
+            print(self.trapSection())
+        elif movingRoom == "Arena-room":
+            print(self.combatSequence())
+        elif movingRoom == "Merchant-room":
+            print(self.merchantSection())
 
 
     #Creating a combat action sequence    
     def combatSequence(self):
-        #Creating player input for what they want to do!
-        print("1. Attack\n" \
-              "2. Potion\n" \
-              "3. Retreat" \
-              )
-        
-        playerChoice = int(input("Please select an option!: "))
+          #Arena initalisation
+          startArena = Dungeon.ArenaRoom()
+          startArena.battleArena()
 
-        #Menu selection
-        if playerChoice == 1:
-            commenceCombat = Combat.Combat(self.__player, self.__playerWeapon, self._arenaRoom.enemiesInArena())
-            commenceCombat.enemyHitChance()
-            commenceCombat.playerHitChance()
-        elif playerChoice == 2:
-             self.__inventory.usingPotion()
-        else:
-            return "There is no retreat :)"
+          #Main combat loop
+          while startArena.remainingEnemies() > 0:
+               #Creating menu
+               print("1. Attack\n" \
+                     "2. Potion\n" \
+                     "3. Check-Stats" \
+                    )
+               
+               #Player selects what option they want to do
+               playerChoice = int(input("Please select an option!: "))
+               #Creating turn based combat
+               if playerChoice == 1:
+                    
+                    #Initalising current combat between player and enemies 
+                    commenceCombat = ArenaCombat.Combat(self.__player,self.__playerWeapon,startArena.enemiesInArena())
+
+          
+                    for enemy in startArena.enemiesInArena():
+                        enemyDeath = enemy.enemyDeathState()
+                        commenceCombat.enemyHitChance() 
+
+                        #Checking if the function returns true to allow for death removal
+                        if enemyDeath is True:
+                            startArena.enemyDeathRemoval()
+                            self.__inventory.pickingGold()
+                    
+                    #Creating player hit-chance and whether the player dies
+                    commenceCombat.playerHitChance()
+                    if self.__player.playerDeathState() is True:
+                        break
+               #Player using health potions
+               elif playerChoice == 2:
+                   print(self.__inventory.usingPotion())
+
+               #Checking current player stats
+               elif playerChoice == 3:
+                   print(self.__player.checkingPlayerStats())
+                   print(f"Current gold: {self.__inventory.gettingGold()}")
         
+          return 
+
+    #Creating merchantRoom-selection
+    def merchantSection(self):
+        merchantStk= Dungeon.MerchantRoom()
+
+        merchantStk.merchantStock()
+        self.__inventory.buyingItem()
+        return
+
+    #Creaitng trap room section 
+    def trapSection(self):
+        trapRoom = Dungeon.TrapRoom(self.__player)
+        
+        print(trapRoom.statusEffect())
+        return
+    
+    #Creaitng current room index and size of the room
+
+    def getDungeonSize(self):
+       gameSize = self.__dungeon.getDungeonIndex()
+       return gameSize
+    
+    def getDungeonLength(self):
+        gameSize = self.__dungeon.getCurrentRoom()
+        return gameSize
+    
+    #Getting player health
+    def getPlayerHealth(self):
+        return self.__player.getPlayerHealth()
 
 def main():
 
@@ -98,10 +147,14 @@ def main():
     gameInit.playerCreation()
     gameInit.playerWeaponSelection()
 
-    currentRoom = gameInit.dungeonSequence()
-
-    if "Arena-room" in currentRoom: 
-        print(gameInit.combatSequence())
+    while gameInit.getDungeonSize() < gameInit.getDungeonLength():
+        
+        if gameInit.getPlayerHealth() > 0 :
+            print(gameInit.dungeonSequence())
+        
+        else:
+            print("Game-over!")
+            break
 
 main()
 
