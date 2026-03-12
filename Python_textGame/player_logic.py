@@ -184,20 +184,20 @@ class Weapon:
      def weaponStart(self):
 
           #Heavy weapon profieceny 
-          if self._player._hp >= 130:
+          if self._player._weaponAttributes.get("Strength") >= 15:
                print("Heavy weapons available: ", end='')
                for weapons in self._heavyWeapons:
                     print(weapons, end=' ') 
                return 
           #light weapon profieceny
-          if self._player._sp >= 130:
+          if self._player._weaponAttributes.get("Dexterity") >= 15:
                print("Light weapons available: ", end='')
                for weapons in self._lightWeapons:
                     print(weapons, end=' ') 
                return 
           #magic profieceny 
           print("Magic weapons available: ", end='')
-          if self._player._mp >= 130:
+          if self._player._weaponAttributes.get("Intelligence") >= 15:
                for weapons in self._magicWeapons:
                     print(weapons, end=' ') 
                return 

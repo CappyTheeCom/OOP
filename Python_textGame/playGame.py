@@ -54,7 +54,7 @@ class GameExe:
         movingRoom = self.__dungeon.next_room()
 
         if movingRoom == "Trap-room":
-            print(self.trapSection())
+            self.trapSection()
         elif movingRoom == "Arena-room":
             print(self.combatSequence())
         elif movingRoom == "Merchant-room":
@@ -150,12 +150,15 @@ def main():
     while gameInit.getDungeonSize() < gameInit.getDungeonLength():
         
         if gameInit.getPlayerHealth() > 0 :
-            print(gameInit.dungeonSequence())
-        
-        else:
+            gameInit.dungeonSequence()
+    
+        elif gameInit.getPlayerHealth() <= 0:
             print("Game-over!")
             break
-
+        
+    #Checking dungeon condition to ensure the win state of the game
+    if gameInit.getDungeonSize() == gameInit.getDungeonLength():
+        print("You win!!!!")
 main()
 
 
